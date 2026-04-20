@@ -1988,6 +1988,16 @@ window.MARCO_SCRIPT = {
       if (callState !== 'connecting') return;
       setState('live');
       const script = (window.MARCO_SCRIPT[key] || window.MARCO_SCRIPT.default)[currentLang] || window.MARCO_SCRIPT.default.it;
+
+      // Aggiungi Web Speech API per far parlare Marco
+      const fullText = script.join(' ');
+      if ('speechSynthesis' in window && fullText) {
+        const utterance = new SpeechSynthesisUtterance(fullText);
+        utterance.lang = currentLang === 'it' ? 'it-IT' : 'en-US';
+        utterance.rate = 0.95;
+        window.speechSynthesis.speak(utterance);
+      }
+
       typeLines(script, () => {
         setTimeout(() => { if (callState === 'live') endCall(); }, 1600);
       });
@@ -1996,6 +2006,7 @@ window.MARCO_SCRIPT = {
 
   function endCall() {
     if (typingTimer) clearTimeout(typingTimer);
+    window.speechSynthesis.cancel();
     setState('ended');
     setTimeout(() => { if (callState === 'ended') setState('idle'); }, 2800);
   }
