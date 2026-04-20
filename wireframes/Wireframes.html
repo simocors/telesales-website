@@ -1,0 +1,728 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Telesales.it — Wireframes</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Kalam:wght@300;400;700&family=Architects+Daughter&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --ink-soft: #3a3a3a;
+    --paper: #f5f1e8;
+    --paper-soft: #ebe5d5;
+    --line: #2a2a2a;
+    --hi: #e8a735;       /* oro sketch */
+    --hi-blue: #2c4a7a;  /* blu sketch */
+    --muted: #8a8a85;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--paper); color: var(--ink); font-family: 'Kalam', cursive; }
+  body { padding: 24px 24px 80px; }
+  .page-head {
+    max-width: 1400px; margin: 0 auto 24px;
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 24px;
+    border-bottom: 2px dashed var(--ink); padding-bottom: 16px;
+  }
+  .page-head h1 { font-family: 'Caveat', cursive; font-weight: 700; font-size: 48px; margin: 0 0 4px; letter-spacing: -.5px; }
+  .page-head p  { font-family: 'Architects Daughter'; font-size: 14px; margin: 0; color: var(--ink-soft); max-width: 560px; line-height: 1.5; }
+  .legend { font-family: 'JetBrains Mono'; font-size: 11px; color: var(--muted); text-align: right; line-height: 1.7; }
+  .legend b { color: var(--hi); }
+  .legend i { color: var(--hi-blue); font-style: normal; }
+
+  .tabs { max-width: 1400px; margin: 0 auto 18px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .tab {
+    font-family: 'Caveat', cursive; font-size: 22px; font-weight: 600;
+    background: transparent; border: 2px solid var(--ink); padding: 4px 16px 6px;
+    cursor: pointer; border-radius: 24px 8px 24px 8px;
+    transform: rotate(-.5deg); transition: all .15s;
+  }
+  .tab:nth-child(even) { transform: rotate(.6deg); border-radius: 8px 24px 8px 24px; }
+  .tab:hover { background: var(--paper-soft); }
+  .tab.active { background: var(--ink); color: var(--paper); }
+
+  .section { max-width: 1400px; margin: 0 auto 48px; display: none; }
+  .section.active { display: block; }
+  .section > h2 {
+    font-family: 'Caveat', cursive; font-size: 36px; font-weight: 700;
+    margin: 0 0 4px; letter-spacing: -.5px;
+  }
+  .section > .sub {
+    font-family: 'Architects Daughter'; font-size: 13px; color: var(--ink-soft);
+    margin: 0 0 24px;
+  }
+  .grid { display: grid; gap: 20px; }
+  .grid.c3 { grid-template-columns: repeat(3, 1fr); }
+  .grid.c2 { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 900px) { .grid.c3, .grid.c2 { grid-template-columns: 1fr; } }
+
+  /* a "paper card" that holds one wireframe */
+  .wf {
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    border-radius: 6px;
+    padding: 14px 14px 18px;
+    position: relative;
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+  .wf::before {
+    content: ""; position: absolute; left: 10px; right: 10px; top: 6px; height: 3px;
+    background: repeating-linear-gradient(90deg, var(--ink) 0 3px, transparent 3px 7px);
+    opacity: .15;
+  }
+  .wf .label {
+    font-family: 'Caveat', cursive; font-size: 22px; font-weight: 700;
+    display: flex; align-items: baseline; gap: 8px; margin-bottom: 2px;
+  }
+  .wf .label .tag {
+    font-family: 'JetBrains Mono'; font-size: 10px; background: var(--ink); color: var(--paper);
+    padding: 2px 6px; border-radius: 3px; font-weight: 500; letter-spacing: .5px;
+  }
+  .wf .note {
+    font-family: 'Architects Daughter'; font-size: 12px; color: var(--ink-soft);
+    line-height: 1.4; margin: 0 0 12px; min-height: 34px;
+  }
+  .wf .canvas {
+    background: var(--paper-soft);
+    border: 1.5px dashed var(--ink);
+    border-radius: 4px;
+    padding: 12px;
+    position: relative;
+  }
+
+  /* sketchy primitives */
+  .box {
+    border: 1.5px solid var(--ink); border-radius: 3px; background: transparent;
+    padding: 6px 8px; font-family: 'Kalam'; font-size: 13px; line-height: 1.2;
+    position: relative;
+  }
+  .box.filled { background: var(--ink); color: var(--paper); }
+  .box.gold   { border-color: var(--hi); background: #f6e5b8; }
+  .box.gold.filled { background: var(--hi); color: var(--ink); }
+  .box.blue   { border-color: var(--hi-blue); background: #d9e2ef; }
+  .box.dashed { border-style: dashed; }
+  .box.tilt   { transform: rotate(-.8deg); }
+  .box.tilt2  { transform: rotate(.7deg); }
+  .scribble { height: 6px; background: repeating-linear-gradient(90deg, var(--ink) 0 6px, transparent 6px 10px); opacity: .35; border-radius: 2px; }
+  .scribble.thin { height: 3px; opacity: .25; }
+  .scribble.half { width: 55%; }
+  .scribble.short { width: 32%; }
+  .hline { height: 0; border-top: 1.5px solid var(--ink); margin: 6px 0; }
+  .hline.dashed { border-top-style: dashed; }
+
+  .row { display: flex; gap: 6px; align-items: center; }
+  .row > * { flex: 0 0 auto; }
+  .row.spread { justify-content: space-between; }
+  .stack { display: flex; flex-direction: column; gap: 6px; }
+  .mini { font-family: 'JetBrains Mono'; font-size: 10px; color: var(--muted); }
+  .cap  { font-family: 'Architects Daughter'; font-size: 11px; color: var(--ink-soft); }
+
+  /* annotations / arrows */
+  .anno {
+    font-family: 'Caveat', cursive; font-weight: 600; font-size: 16px;
+    color: var(--hi-blue);
+    position: absolute;
+  }
+  .arrow { font-family: 'Caveat'; font-size: 20px; color: var(--hi-blue); }
+
+  /* === HERO variants === */
+  .hero-wf .canvas { min-height: 320px; display: flex; flex-direction: column; gap: 8px; }
+  .nav-row { display: flex; justify-content: space-between; align-items: center; padding-bottom: 6px; border-bottom: 1px dashed var(--ink); }
+  .logo-dot { width: 18px; height: 18px; border-radius: 50%; background: var(--hi); border: 1.5px solid var(--ink); display:inline-block; margin-right:4px; vertical-align:middle; }
+
+  .waveform { display: flex; align-items: end; gap: 3px; height: 60px; }
+  .waveform span { display:block; width: 4px; background: var(--ink); border-radius: 2px; }
+  .waveform.gold span:nth-child(odd) { background: var(--hi); }
+  .waveform.blue span:nth-child(even) { background: var(--hi-blue); }
+
+  .headline-big {
+    font-family: 'Caveat', cursive; font-weight: 700;
+    font-size: 30px; line-height: .95; letter-spacing: -1px;
+  }
+  .headline-big em { color: var(--hi); font-style: italic; }
+  .headline-big b  { color: var(--hi-blue); }
+
+  /* products grid inner */
+  .p9-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .p9-grid .cell { aspect-ratio: 1/1; padding: 5px; display: flex; flex-direction: column; gap: 3px; font-size: 10px; }
+  .p9-grid .cell .dot { width: 14px; height: 14px; border-radius: 50%; border: 1.5px solid var(--ink); background: var(--paper); }
+  .p9-grid .cell.hi { border-color: var(--hi); background: #f9ecc8; }
+  .p9-grid .cell.hi .dot { background: var(--hi); }
+  .p9-grid .num { font-family: 'JetBrains Mono'; font-size: 9px; color: var(--muted); text-align: right; }
+
+  .bento { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(3, 1fr); gap: 6px; height: 260px; }
+  .bento .cell { border: 1.5px solid var(--ink); border-radius: 3px; padding: 4px 6px; font-size: 10px; background: var(--paper); display: flex; flex-direction: column; justify-content: space-between; }
+  .bento .cell.hi { background: #f9ecc8; border-color: var(--hi); }
+  .bento .cell.big { background: var(--ink); color: var(--paper); }
+  .bento .num { font-family: 'JetBrains Mono'; font-size: 9px; opacity: .7; }
+
+  .list-prod { display: flex; flex-direction: column; gap: 4px; }
+  .list-prod .row-p { display: grid; grid-template-columns: 24px 22px 1fr 40px; gap: 6px; align-items: center; padding: 5px 6px; border-bottom: 1px dashed var(--ink); }
+  .list-prod .row-p.hi { background: #f9ecc8; border: 1.5px solid var(--hi); border-radius: 3px; }
+
+  /* Marco variants */
+  .marco-card .mic {
+    width: 64px; height: 64px; border-radius: 50%; border: 2px solid var(--hi); background: #f9ecc8;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Caveat'; font-weight: 700; font-size: 26px; margin: 0 auto 8px;
+  }
+  .marco-full .mic { width: 90px; height: 90px; font-size: 34px; }
+  .marco-float { position: relative; }
+  .marco-float .float-btn {
+    position: absolute; right: 10px; bottom: 10px;
+    width: 70px; height: 70px; border-radius: 50%; background: var(--ink); color: var(--hi);
+    display: flex; align-items: center; justify-content: center; font-family:'Caveat'; font-size: 22px; font-weight: 700;
+    border: 2px solid var(--hi);
+  }
+  .ghost-page { min-height: 180px; background: repeating-linear-gradient(180deg, transparent 0 18px, rgba(0,0,0,.08) 18px 19px); border-radius: 3px; padding: 8px; }
+
+  /* animation storyboard */
+  .anim-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+  .anim-strip .frame { border: 1.5px solid var(--ink); border-radius: 3px; padding: 6px; min-height: 90px; position: relative; background: var(--paper); }
+  .anim-strip .frame .fnum { position: absolute; top: 2px; right: 4px; font-family:'JetBrains Mono'; font-size: 9px; color: var(--muted); }
+  .anim-strip .frame .cap { font-family:'Architects Daughter'; font-size: 10px; color: var(--ink-soft); margin-top: 4px; }
+
+  .pick-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; padding-top: 14px; border-top: 2px dashed var(--ink); }
+  .pick-row .q {
+    font-family: 'Caveat', cursive; font-size: 22px; font-weight: 700;
+  }
+  .pick-row .opt {
+    font-family: 'Architects Daughter'; font-size: 13px; color: var(--ink-soft);
+    padding: 4px 10px; border: 1.5px solid var(--ink); border-radius: 20px; cursor: pointer; background: var(--paper);
+  }
+  .pick-row .opt.sel { background: var(--hi); }
+
+  /* full-width sections inside a single tab */
+  .block { margin-bottom: 36px; }
+  .block h3 {
+    font-family: 'Caveat', cursive; font-weight: 700; font-size: 28px; margin: 0 0 2px;
+  }
+  .block .sub2 { font-family: 'Architects Daughter'; font-size: 12px; color: var(--ink-soft); margin: 0 0 12px; }
+
+  /* footer signature */
+  .sig {
+    max-width: 1400px; margin: 40px auto 0;
+    font-family: 'Caveat', cursive; font-size: 20px; color: var(--ink-soft);
+    text-align: center; transform: rotate(-.5deg);
+  }
+</style>
+</head>
+<body>
+
+<div class="page-head">
+  <div>
+    <h1>Telesales.it — wireframe exploration</h1>
+    <p>Low-fi sketches per esplorare direzioni prima di committare al hi-fi. Ho preso le 3 dimensioni che hai scelto (prodotti, Marco, animazioni) + hero e provo approcci diversi per ciascuna.</p>
+  </div>
+  <div class="legend">
+    stroke · ink<br>
+    <b>■ gold accent</b><br>
+    <i>■ blue accent</i><br>
+    dashed · dynamic/ghost<br>
+    sketchy = low-fi ✎
+  </div>
+</div>
+
+<div class="tabs" id="tabs">
+  <button class="tab active" data-t="hero">01 · Hero</button>
+  <button class="tab" data-t="products">02 · 9 Prodotti</button>
+  <button class="tab" data-t="marco">03 · Marco Demo</button>
+  <button class="tab" data-t="anim">04 · Animazioni</button>
+  <button class="tab" data-t="flow">05 · Flow pagina</button>
+  <button class="tab" data-t="app">06 · Web app (preview)</button>
+</div>
+
+<!-- ============ HERO ============ -->
+<section class="section active" id="t-hero">
+  <h2>Hero — 3 direzioni cinematic</h2>
+  <p class="sub">Stesso claim, composizioni radicalmente diverse. Waveform protagonista in tutte e tre, ruolo diverso.</p>
+
+  <div class="grid c3">
+
+    <!-- HERO A: centered, waveform sotto -->
+    <div class="wf hero-wf">
+      <div class="label">A · Centered monument <span class="tag">CLASSIC</span></div>
+      <p class="note">Titolo enorme al centro, waveform decorativo sotto. Tipo manifesto politico.</p>
+      <div class="canvas">
+        <div class="nav-row">
+          <div class="row"><span class="logo-dot"></span><span class="mini">telesales<b style="color:var(--hi)">.it</b></span></div>
+          <div class="row" style="gap:10px"><span class="mini">Prodotti</span><span class="mini">Demo</span><span class="mini">Come</span><span class="box gold" style="padding:2px 8px;font-size:10px">Prenota →</span></div>
+        </div>
+        <div style="text-align:center; padding: 18px 0 8px;">
+          <div class="box dashed" style="display:inline-block;font-size:10px;padding:3px 8px;margin-bottom:10px;">● 1.033 chiamate reali · 5 giorni</div>
+          <div class="headline-big">Sostituiamo<br><em>INTERI REPARTI</em><br>aziendali con <b>AI</b></div>
+          <div class="cap" style="margin-top:6px;">9 prodotti · team interi · commerciale, HR, marketing, CS</div>
+        </div>
+        <div class="waveform gold" style="justify-content:center;">
+          <span style="height:12px"></span><span style="height:26px"></span><span style="height:40px"></span><span style="height:58px"></span><span style="height:38px"></span><span style="height:22px"></span><span style="height:48px"></span><span style="height:30px"></span><span style="height:14px"></span><span style="height:40px"></span><span style="height:22px"></span><span style="height:50px"></span><span style="height:36px"></span><span style="height:18px"></span><span style="height:28px"></span><span style="height:44px"></span><span style="height:20px"></span><span style="height:34px"></span><span style="height:12px"></span><span style="height:42px"></span>
+        </div>
+        <div class="row" style="justify-content:center;gap:8px;margin-top:8px;">
+          <div class="box gold filled">🎙 Parla con Marco</div>
+          <div class="box">⚡ Prenota demo</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HERO B: split, waveform colonna destra full-height -->
+    <div class="wf hero-wf">
+      <div class="label">B · Split · waveform live <span class="tag">EDITORIAL</span></div>
+      <p class="note">Testo a sinistra, waveform reattivo a destra che occupa tutta la colonna. Più tech.</p>
+      <div class="canvas">
+        <div class="nav-row">
+          <div class="row"><span class="logo-dot"></span><span class="mini">telesales<b style="color:var(--hi)">.it</b></span></div>
+          <div class="row" style="gap:10px"><span class="mini">IT/EN</span><span class="box gold" style="padding:2px 8px;font-size:10px">Prenota →</span></div>
+        </div>
+        <div style="display:grid; grid-template-columns: 1.2fr 1fr; gap: 12px; margin-top: 14px;">
+          <div class="stack">
+            <div class="box dashed" style="display:inline-block;font-size:10px;padding:3px 8px;width:fit-content">● LIVE · Marco sta chiamando</div>
+            <div class="headline-big" style="font-size:24px;text-align:left">Reparti interi.<br><em>Un'unica AI.</em></div>
+            <div class="cap">1.033 chiamate · 72 lead · 340h risparmiate</div>
+            <div class="scribble"></div><div class="scribble half"></div>
+            <div class="row" style="margin-top:4px">
+              <div class="box gold filled">🎙 Parla con Marco</div>
+              <div class="box">⚡ Demo</div>
+            </div>
+          </div>
+          <div style="border:1.5px solid var(--ink); border-radius:3px; padding:8px; background:#0a0a0f08;">
+            <div class="mini" style="color:var(--hi-blue)">LIVE SIGNAL</div>
+            <div class="waveform blue" style="align-items:center; height:120px;">
+              <span style="height:30px"></span><span style="height:60px"></span><span style="height:90px"></span><span style="height:50px"></span><span style="height:100px"></span><span style="height:40px"></span><span style="height:70px"></span><span style="height:110px"></span><span style="height:30px"></span><span style="height:80px"></span><span style="height:50px"></span><span style="height:95px"></span>
+            </div>
+            <div class="mini" style="text-align:right">800ms · latenza</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HERO C: full bleed, big number -->
+    <div class="wf hero-wf">
+      <div class="label">C · Data first <span class="tag">BOLD</span></div>
+      <p class="note">Numero gigantesco (1.033) come protagonista. Waveform come underline animato.</p>
+      <div class="canvas" style="background: var(--ink); color: var(--paper); border-color: var(--paper);">
+        <div class="nav-row" style="border-color:var(--paper)">
+          <div class="row"><span class="logo-dot"></span><span class="mini" style="color:var(--paper)">telesales<b style="color:var(--hi)">.it</b></span></div>
+          <div class="row"><span class="box gold" style="padding:2px 8px;font-size:10px;color:var(--ink)">Prenota →</span></div>
+        </div>
+        <div style="text-align:center; padding: 10px 0;">
+          <div class="mini" style="color:var(--hi)">● 5 GIORNI DI USO REALE</div>
+          <div style="font-family:'Caveat'; font-size:90px; line-height:.9; color:var(--hi); letter-spacing:-2px; font-weight:700">1.033</div>
+          <div class="cap" style="color:var(--paper)">chiamate fatte dal nostro AI, su aziende vere italiane</div>
+          <div class="waveform gold" style="justify-content:center; margin-top:8px; height:20px">
+            <span style="height:6px"></span><span style="height:14px"></span><span style="height:10px"></span><span style="height:18px"></span><span style="height:8px"></span><span style="height:16px"></span><span style="height:12px"></span><span style="height:20px"></span><span style="height:6px"></span><span style="height:14px"></span><span style="height:10px"></span><span style="height:18px"></span><span style="height:8px"></span><span style="height:16px"></span>
+          </div>
+          <div class="headline-big" style="color:var(--paper); font-size:22px; margin-top:12px">Adesso tocca a te.</div>
+          <div class="row" style="justify-content:center;gap:8px;margin-top:10px">
+            <div class="box gold filled">🎙 Parla con Marco</div>
+            <div class="box" style="color:var(--paper); border-color:var(--paper)">Demo</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pick-row">
+    <span class="q">Preferenza?</span>
+    <span class="opt">A · Centered</span>
+    <span class="opt sel">B · Split live</span>
+    <span class="opt">C · Data first</span>
+    <span class="opt">Mix: titolo A + waveform B</span>
+  </div>
+</section>
+
+<!-- ============ PRODUCTS ============ -->
+<section class="section" id="t-products">
+  <h2>9 Prodotti — griglia, bento o lista?</h2>
+  <p class="sub">AI Voice evidenziato in tutte. Densità e gerarchia diverse.</p>
+
+  <div class="grid c3">
+
+    <!-- Grid 3x3 -->
+    <div class="wf">
+      <div class="label">A · Grid 3×3 uniforme <span class="tag">SCAN</span></div>
+      <p class="note">Cards uguali, scansione veloce, AI Voice con ring oro. Semplice, prevedibile.</p>
+      <div class="canvas">
+        <div class="p9-grid">
+          <div class="cell box"><div class="num">01</div><div class="dot"></div><div class="cap">Outreach omnicanale</div></div>
+          <div class="cell box hi"><div class="num">02 ● LIVE</div><div class="dot"></div><div class="cap"><b>AI Voice</b></div></div>
+          <div class="cell box"><div class="num">03</div><div class="dot"></div><div class="cap">CRM</div></div>
+          <div class="cell box"><div class="num">04</div><div class="dot"></div><div class="cap">HR AI</div></div>
+          <div class="cell box"><div class="num">05</div><div class="dot"></div><div class="cap">Scraping mondiale</div></div>
+          <div class="cell box"><div class="num">06</div><div class="dot"></div><div class="cap">Agent Eventi</div></div>
+          <div class="cell box"><div class="num">07</div><div class="dot"></div><div class="cap">Prodotti digitali</div></div>
+          <div class="cell box"><div class="num">08</div><div class="dot"></div><div class="cap">Marketing AI</div></div>
+          <div class="cell box"><div class="num">09</div><div class="dot"></div><div class="cap">Bandi & investitori</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bento -->
+    <div class="wf">
+      <div class="label">B · Bento asimmetrico <span class="tag">HIERARCHY</span></div>
+      <p class="note">AI Voice grande al centro, 8 satelliti. Più visual, comunica gerarchia.</p>
+      <div class="canvas">
+        <div class="bento">
+          <div class="cell" style="grid-column:1; grid-row:1"><div class="num">01</div>Outreach</div>
+          <div class="cell big hi" style="grid-column:2 / span 2; grid-row:1 / span 2; background:var(--ink); color:var(--paper); border-color:var(--hi)">
+            <div><div class="num" style="color:var(--hi)">02 · ● LIVE</div><b style="font-size:16px;font-family:'Caveat'">AI Voice</b></div>
+            <div class="cap" style="color:var(--paper);opacity:.7">voci indistinguibili · cold · inbound · CS</div>
+          </div>
+          <div class="cell" style="grid-column:4; grid-row:1"><div class="num">03</div>CRM</div>
+          <div class="cell" style="grid-column:1; grid-row:2"><div class="num">04</div>HR AI</div>
+          <div class="cell" style="grid-column:4; grid-row:2"><div class="num">05</div>Scraping</div>
+          <div class="cell" style="grid-column:1; grid-row:3"><div class="num">06</div>Eventi</div>
+          <div class="cell" style="grid-column:2; grid-row:3"><div class="num">07</div>Prod. digitali</div>
+          <div class="cell" style="grid-column:3; grid-row:3"><div class="num">08</div>Marketing</div>
+          <div class="cell" style="grid-column:4; grid-row:3"><div class="num">09</div>Bandi</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- List / table -->
+    <div class="wf">
+      <div class="label">C · Lista densa / indice <span class="tag">EDITORIAL</span></div>
+      <p class="note">Tipo indice di un libro. Espande on-hover. Più adulta, meno "startup".</p>
+      <div class="canvas">
+        <div class="list-prod">
+          <div class="row-p"><span class="mini">01</span><span class="box" style="width:16px;height:16px;padding:0"></span><span>Outreach omnicanale</span><span class="mini">→</span></div>
+          <div class="row-p hi"><span class="mini">02</span><span class="box gold filled" style="width:16px;height:16px;padding:0"></span><b>AI Voice</b><span class="mini" style="color:var(--hi)">● LIVE →</span></div>
+          <div class="row-p"><span class="mini">03</span><span class="box" style="width:16px;height:16px;padding:0"></span><span>CRM centralizzato</span><span class="mini">→</span></div>
+          <div class="row-p"><span class="mini">04</span><span class="box" style="width:16px;height:16px;padding:0"></span><span>HR AI</span><span class="mini">→</span></div>
+          <div class="row-p"><span class="mini">05</span><span class="box" style="width:16px;height:16px;padding:0"></span><span>Scraping mondiale</span><span class="mini">→</span></div>
+          <div class="row-p"><span class="mini">06</span><span class="box" style="width:16px;height:16px;padding:0"></span><span>Agent Eventi</span><span class="mini">→</span></div>
+          <div class="row-p"><span class="mini">07</span><span class="box" style="width:16px;height:16px;padding:0"></span><span>Prodotti digitali</span><span class="mini">→</span></div>
+          <div class="row-p"><span class="mini">08</span><span class="box" style="width:16px;height:16px;padding:0"></span><span>Marketing AI</span><span class="mini">→</span></div>
+          <div class="row-p" style="border-bottom:none"><span class="mini">09</span><span class="box" style="width:16px;height:16px;padding:0"></span><span>Bandi & investitori</span><span class="mini">→</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="pick-row">
+    <span class="q">Preferenza?</span>
+    <span class="opt">A · Grid uniforme</span>
+    <span class="opt sel">B · Bento</span>
+    <span class="opt">C · Lista editoriale</span>
+  </div>
+</section>
+
+<!-- ============ MARCO ============ -->
+<section class="section" id="t-marco">
+  <h2>Marco Demo — card, fullscreen o floating?</h2>
+  <p class="sub">Cuore della pagina. Il CEO deve poter parlare con l'AI in 1 click.</p>
+
+  <div class="grid c3">
+
+    <!-- Card -->
+    <div class="wf marco-card">
+      <div class="label">A · Card centrata <span class="tag">CONTAINED</span></div>
+      <p class="note">Sezione dedicata, card grande gradient. Rispetta il flow della pagina.</p>
+      <div class="canvas" style="padding: 20px 14px;">
+        <div style="text-align:center;">
+          <div class="mic">🎙</div>
+          <div class="headline-big" style="font-size:22px">Marco Ferretti <em>2.0</em></div>
+          <div class="cap">AI commerciale. Conosce i 9 prodotti. Risponde a tutto.</div>
+          <div class="row" style="justify-content:center;gap:6px;margin:8px 0;flex-wrap:wrap">
+            <span class="box" style="font-size:10px">● Online</span>
+            <span class="box" style="font-size:10px">🇮🇹 IT</span>
+            <span class="box" style="font-size:10px">🔊 Reale</span>
+            <span class="box" style="font-size:10px">⚡ &lt;800ms</span>
+          </div>
+          <div class="box gold filled" style="padding:10px;font-size:14px;margin-top:6px">🎤 CLICCA PER PARLARE</div>
+          <div class="cap" style="margin-top:10px">Prova a dire:</div>
+          <div class="row" style="justify-content:center;gap:4px;margin-top:4px;flex-wrap:wrap">
+            <span class="box dashed" style="font-size:10px">"Quanto costa?"</span>
+            <span class="box dashed" style="font-size:10px">"Come funziona l'AI Voice?"</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fullscreen takeover -->
+    <div class="wf marco-full">
+      <div class="label">B · Fullscreen takeover <span class="tag">CINEMATIC</span></div>
+      <p class="note">Click → modal a schermo intero, waveform immenso, esperienza immersiva. WOW.</p>
+      <div class="canvas" style="padding:0; position:relative; overflow:hidden;">
+        <div class="ghost-page">
+          <div class="mini" style="opacity:.5">scroll della pagina sottostante…</div>
+        </div>
+        <div style="position:absolute; inset: 6px; background: var(--ink); color: var(--paper); border-radius: 3px; padding: 14px; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+          <div class="mini" style="color:var(--hi)">● LIVE CON MARCO</div>
+          <div class="mic" style="background:transparent;border:2px solid var(--hi);color:var(--hi);width:70px;height:70px">🎙</div>
+          <div class="waveform gold" style="justify-content:center">
+            <span style="height:20px"></span><span style="height:40px"></span><span style="height:60px"></span><span style="height:30px"></span><span style="height:50px"></span><span style="height:70px"></span><span style="height:25px"></span><span style="height:45px"></span><span style="height:60px"></span><span style="height:35px"></span><span style="height:55px"></span><span style="height:30px"></span>
+          </div>
+          <div class="cap" style="color:var(--paper); text-align:center; margin-top:8px;">"Ciao! Sono Marco. Di cosa ti occupi?"</div>
+          <div class="row" style="margin-top:10px;gap:6px">
+            <span class="box gold filled" style="font-size:10px">Mute</span>
+            <span class="box" style="color:var(--paper);border-color:var(--paper);font-size:10px">Chiudi ✕</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Floating button persistent -->
+    <div class="wf marco-float">
+      <div class="label">C · Floating persistente <span class="tag">ALWAYS ON</span></div>
+      <p class="note">Bottone sempre presente bottom-right. Scroll ovunque, call sempre a 1 tap. Tipo Intercom.</p>
+      <div class="canvas" style="position:relative; min-height:260px;">
+        <div class="ghost-page" style="min-height:240px">
+          <div class="scribble"></div>
+          <div class="scribble half" style="margin-top:6px"></div>
+          <div class="scribble" style="margin-top:14px"></div>
+          <div class="scribble short" style="margin-top:6px"></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr; gap:6px; margin-top:16px;">
+            <div class="box" style="height:50px"></div>
+            <div class="box" style="height:50px"></div>
+          </div>
+          <div class="cap" style="margin-top:14px;opacity:.5">(pagina landing normale)</div>
+        </div>
+        <div class="float-btn">🎙 Parla<br>con Marco</div>
+        <div class="anno" style="right:90px; bottom:40px;">persiste<br>ovunque ↘</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="pick-row">
+    <span class="q">Preferenza?</span>
+    <span class="opt">A · Card</span>
+    <span class="opt sel">B · Fullscreen takeover</span>
+    <span class="opt">C · Floating</span>
+    <span class="opt">B + C (sezione + persistente)</span>
+  </div>
+</section>
+
+<!-- ============ ANIMATIONS ============ -->
+<section class="section" id="t-anim">
+  <h2>Animazioni — sobrie o cinematiche?</h2>
+  <p class="sub">Storyboard a 4 frame per ciascun approccio. Dal più contenuto al più audace.</p>
+
+  <div class="block">
+    <h3>A · Sobrio ed efficiente <span style="font-family:'JetBrains Mono'; font-size:11px; color:var(--muted); font-weight:400">— tipo Linear</span></h3>
+    <div class="sub2">Fade + 8px di slide-up. Count-up per i numeri. Marquee continuo. Basta.</div>
+    <div class="anim-strip">
+      <div class="frame"><span class="fnum">0ms</span><div class="scribble"></div><div class="scribble half" style="margin-top:6px"></div><div class="cap">stato iniziale (viewport)</div></div>
+      <div class="frame"><span class="fnum">100ms</span><div class="scribble" style="opacity:.5"></div><div class="scribble half" style="margin-top:6px;opacity:.6"></div><div class="cap">fade-in inizia</div></div>
+      <div class="frame"><span class="fnum">300ms</span><div class="scribble" style="opacity:1"></div><div class="box gold" style="font-size:10px;margin-top:6px">1.033</div><div class="cap">count-up parte (0→1033)</div></div>
+      <div class="frame"><span class="fnum">600ms</span><div class="box gold filled" style="font-size:10px">1.033</div><div class="scribble" style="margin-top:6px"></div><div class="cap">settled, leggibile</div></div>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3>B · Cinematic bilanciato <span style="font-family:'JetBrains Mono'; font-size:11px; color:var(--muted); font-weight:400">— raccomandato</span></h3>
+    <div class="sub2">Parallax leggero, waveform reattivo, hover che illumina, microfono che respira. Magnetic cursor sui CTA principali.</div>
+    <div class="anim-strip">
+      <div class="frame"><span class="fnum">scroll</span><div style="display:flex;gap:4px;align-items:end;height:30px"><span style="width:3px;background:var(--hi);height:10px"></span><span style="width:3px;background:var(--hi);height:22px"></span><span style="width:3px;background:var(--hi);height:14px"></span><span style="width:3px;background:var(--hi);height:28px"></span></div><div class="cap">waveform sincro scroll</div></div>
+      <div class="frame"><span class="fnum">hover</span><div class="box gold" style="box-shadow:3px 3px 0 var(--hi-blue);transform:translate(-2px,-2px)">AI Voice</div><div class="cap">lift + glow blu</div></div>
+      <div class="frame"><span class="fnum">idle</span><div class="mic" style="width:36px;height:36px;font-size:14px">🎙</div><div class="cap">mic pulsa 1→1.05 infinite</div></div>
+      <div class="frame"><span class="fnum">cursor</span><div class="box gold filled" style="position:relative">CTA<span style="position:absolute;right:-14px;top:4px;color:var(--hi-blue)">◉</span></div><div class="cap">magnetic · CTA attrae cursore</div></div>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3>C · Audace · performance first statement <span style="font-family:'JetBrains Mono'; font-size:11px; color:var(--muted); font-weight:400">— scene cinema</span></h3>
+    <div class="sub2">Hero con waveform che <i>reagisce al microfono del visitatore</i> (permesso browser). Scene-based scroll (tipo Apple). Transizioni tra sezioni.</div>
+    <div class="anim-strip">
+      <div class="frame"><span class="fnum">enter</span><div class="cap" style="margin-top:0">🎤 permesso mic?</div><div class="row" style="margin-top:6px;gap:4px"><span class="box" style="font-size:9px">Sì</span><span class="box" style="font-size:9px">No</span></div></div>
+      <div class="frame"><span class="fnum">live</span><div class="waveform blue" style="height:40px"><span style="height:10px"></span><span style="height:28px"></span><span style="height:16px"></span><span style="height:36px"></span><span style="height:14px"></span><span style="height:30px"></span></div><div class="cap">reagisce alla tua voce</div></div>
+      <div class="frame"><span class="fnum">scroll</span><div class="box" style="transform:rotate(-3deg)">sezione si ruota in</div><div class="cap">scene per ogni sezione</div></div>
+      <div class="frame"><span class="fnum">end</span><div class="box gold filled">form arriva da basso</div><div class="cap">nastro oro attraversa</div></div>
+    </div>
+  </div>
+
+  <div class="pick-row">
+    <span class="q">Preferenza?</span>
+    <span class="opt">A · Sobrio</span>
+    <span class="opt sel">B · Cinematic bilanciato</span>
+    <span class="opt">C · Audace (mic access)</span>
+  </div>
+</section>
+
+<!-- ============ FLOW ============ -->
+<section class="section" id="t-flow">
+  <h2>Flow landing — 10 sezioni</h2>
+  <p class="sub">Mappa completa, densità + rhythm. Alternanza luce/ombra per rompere la monotonia del dark.</p>
+  <div class="wf" style="padding: 18px 20px 22px;">
+    <div class="label">Single column, piena pagina</div>
+    <div class="canvas" style="padding: 16px;">
+      <div class="stack" style="gap:10px">
+
+        <div class="box" style="padding:8px 10px"><div class="row spread"><b>NAV · blur on scroll</b><span class="mini">sticky</span></div></div>
+
+        <div class="box gold" style="padding:14px;">
+          <div class="row spread"><b>01 · HERO cinematic — split + waveform live</b><span class="mini">full height</span></div>
+          <div class="scribble" style="margin-top:6px"></div>
+          <div class="scribble half" style="margin-top:4px"></div>
+          <div class="row" style="margin-top:8px;gap:6px">
+            <span class="box gold filled" style="font-size:10px">🎙 Marco</span>
+            <span class="box" style="font-size:10px">Prenota</span>
+          </div>
+        </div>
+
+        <div class="box" style="padding:10px"><b>02 · TRUST · marquee nomi aziende reali</b> <span class="mini">mask gradient lati</span>
+          <div class="row" style="gap:4px;margin-top:6px;overflow:hidden">
+            <span class="box" style="font-size:10px">Tessitura Lascialfari</span>
+            <span class="box" style="font-size:10px">Studio Masi</span>
+            <span class="box" style="font-size:10px">Pelletterie Claudia</span>
+            <span class="box" style="font-size:10px">Morellino</span>
+            <span class="box" style="font-size:10px">CIA Livorno</span>
+            <span class="box" style="font-size:10px">NIPAL</span>
+            <span class="box" style="font-size:10px">…</span>
+          </div>
+        </div>
+
+        <div class="box blue" style="padding:10px"><b>03 · LIVE STATS · 4 card</b>
+          <div class="row" style="gap:6px;margin-top:6px">
+            <div class="box" style="flex:1"><div class="mini">1.033</div><div class="cap">chiamate</div></div>
+            <div class="box" style="flex:1"><div class="mini">72</div><div class="cap">lead</div></div>
+            <div class="box" style="flex:1"><div class="mini">30</div><div class="cap">email</div></div>
+            <div class="box" style="flex:1"><div class="mini">340h</div><div class="cap">risparmiate</div></div>
+          </div>
+        </div>
+
+        <div class="box" style="padding:10px"><b>04 · 9 PRODOTTI · bento (AI Voice hero)</b>
+          <div class="cap">[vedi tab 02]</div>
+        </div>
+
+        <div class="box gold" style="padding:14px; background:#f6e5b8">
+          <div class="row spread"><b>05 · MARCO · fullscreen takeover</b><span class="mini">CORE</span></div>
+          <div class="cap">click → modal a schermo intero con waveform reattivo</div>
+        </div>
+
+        <div class="box" style="padding:10px"><b>06 · COME FUNZIONA · 3 step affiancati</b> · Discovery → Pilot 48h → Scale</div>
+
+        <div class="box" style="padding:10px"><b>07 · TESTIMONIAL / CASE</b>
+          <span class="mini">(aggiunta: umanizza i numeri, prima del form)</span></div>
+
+        <div class="box" style="padding:10px"><b>08 · FAQ accordion</b> · 8 domande</div>
+
+        <div class="box blue" style="padding:10px"><b>09 · BOOKING FORM · "15 min con Niccolò"</b></div>
+
+        <div class="box" style="padding:6px 10px;font-size:11px"><b>10 · FOOTER</b> · logo · claim · © · GDPR · IT/EN switch</div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ APP ============ -->
+<section class="section" id="t-app">
+  <h2>Web app interna — preview struttura</h2>
+  <p class="sub">Dashboard per l'operatore/CEO che gestisce l'AI Voice. Linked dalla landing via "Apri app →".</p>
+
+  <div class="grid c2">
+
+    <div class="wf">
+      <div class="label">Dashboard — overview</div>
+      <p class="note">Home della app. Agenti attivi, chiamate live, numeri del giorno.</p>
+      <div class="canvas" style="padding:10px">
+        <div class="row spread" style="margin-bottom:8px">
+          <div class="row"><span class="logo-dot"></span><span class="mini">telesales<b style="color:var(--hi)">.it</b> · app</span></div>
+          <div class="row"><span class="box" style="font-size:10px">IT</span><span class="box" style="font-size:10px">N</span></div>
+        </div>
+        <div style="display:grid;grid-template-columns:120px 1fr;gap:10px">
+          <div class="stack">
+            <div class="box filled" style="font-size:11px">● Dashboard</div>
+            <div class="box" style="font-size:11px">Agenti</div>
+            <div class="box" style="font-size:11px">Chiamate</div>
+            <div class="box" style="font-size:11px">Contatti</div>
+            <div class="box" style="font-size:11px">Pipeline</div>
+            <div class="box" style="font-size:11px">HR</div>
+            <div class="box" style="font-size:11px">Marketing</div>
+            <div class="box" style="font-size:11px">Bandi</div>
+          </div>
+          <div class="stack">
+            <div class="row" style="gap:6px">
+              <div class="box gold" style="flex:1;padding:8px"><div class="mini">OGGI</div><div style="font-family:'Caveat';font-size:20px">217</div><div class="cap">chiamate</div></div>
+              <div class="box" style="flex:1;padding:8px"><div class="mini">LEAD</div><div style="font-family:'Caveat';font-size:20px">14</div><div class="cap">qualificati</div></div>
+              <div class="box blue" style="flex:1;padding:8px"><div class="mini">TASSO</div><div style="font-family:'Caveat';font-size:20px">6.4%</div><div class="cap">conversione</div></div>
+            </div>
+            <div class="box" style="padding:8px">
+              <div class="row spread"><b>Chiamate live</b><span class="mini" style="color:#22c55e">● 3 attive</span></div>
+              <div class="hline"></div>
+              <div class="row spread"><span class="cap">Marco → Tessitura Lascialfari</span><span class="mini">00:02:14</span></div>
+              <div class="row spread"><span class="cap">Luna → Pelletterie Claudia</span><span class="mini">00:00:48</span></div>
+              <div class="row spread"><span class="cap">Marco → NIPAL</span><span class="mini">00:01:02</span></div>
+            </div>
+            <div class="box" style="padding:8px">
+              <b>Waveform live</b>
+              <div class="waveform gold" style="height:36px">
+                <span style="height:10px"></span><span style="height:24px"></span><span style="height:16px"></span><span style="height:30px"></span><span style="height:12px"></span><span style="height:28px"></span><span style="height:20px"></span><span style="height:34px"></span><span style="height:14px"></span><span style="height:26px"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="wf">
+      <div class="label">Call detail — live / replay</div>
+      <p class="note">Dettaglio singola chiamata. Trascrizione live, sentiment, azioni suggerite.</p>
+      <div class="canvas" style="padding:10px">
+        <div class="row spread" style="margin-bottom:6px">
+          <b>📞 Marco → Tessitura Lascialfari</b>
+          <span class="mini" style="color:#22c55e">● 00:02:14 LIVE</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 140px;gap:10px">
+          <div class="stack">
+            <div class="box" style="padding:6px"><span class="mini">Marco</span><br><span class="cap">"Buongiorno, sono Marco di Telesales. È un momento buono?"</span></div>
+            <div class="box blue" style="padding:6px"><span class="mini">Sig. Lascialfari</span><br><span class="cap">"Sì mi dica, ma brevemente."</span></div>
+            <div class="box" style="padding:6px"><span class="mini">Marco</span><br><span class="cap">"2 minuti. Aiutiamo tessiture come la vostra a…"</span></div>
+            <div class="box blue dashed" style="padding:6px"><span class="mini">Sig. Lascialfari · live</span><br><span class="cap">"interess—"</span> <span class="mini" style="color:var(--hi-blue)">▍</span></div>
+            <div class="waveform blue" style="height:30px">
+              <span style="height:8px"></span><span style="height:18px"></span><span style="height:24px"></span><span style="height:12px"></span><span style="height:22px"></span><span style="height:14px"></span><span style="height:28px"></span><span style="height:10px"></span>
+            </div>
+          </div>
+          <div class="stack">
+            <div class="box gold" style="padding:6px"><div class="mini">SENTIMENT</div><div style="font-family:'Caveat';font-size:18px">+0.42</div><div class="cap">neutro → positivo</div></div>
+            <div class="box" style="padding:6px"><div class="mini">INTENT</div><div class="cap">curiosità</div></div>
+            <div class="box" style="padding:6px"><div class="mini">NEXT</div><div class="cap">proponi demo<br>martedì 15:00</div></div>
+            <div class="box filled" style="padding:6px;text-align:center;font-size:11px">Ascolta live</div>
+            <div class="box" style="padding:6px;text-align:center;font-size:11px">Prendi il controllo</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pick-row">
+    <span class="q">App: dashboard + call detail basta per il prototipo? o vuoi anche Agenti/Contatti/Pipeline?</span>
+    <span class="opt">Solo Dashboard + Call</span>
+    <span class="opt sel">+ Agenti + Pipeline</span>
+    <span class="opt">Full (8 pagine)</span>
+  </div>
+</section>
+
+<div class="sig">✎ pronti per hi-fi. dimmi le tue scelte sopra (o approvi i default evidenziati).</div>
+
+<script>
+  const tabs = document.querySelectorAll('.tab');
+  tabs.forEach(t => t.addEventListener('click', () => {
+    tabs.forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById('t-' + t.dataset.t).classList.add('active');
+    try { localStorage.setItem('wf-tab', t.dataset.t); } catch(e) {}
+  }));
+  try {
+    const saved = localStorage.getItem('wf-tab');
+    if (saved) {
+      const btn = document.querySelector('.tab[data-t="' + saved + '"]');
+      if (btn) btn.click();
+    }
+  } catch(e) {}
+
+  // clickable selection on pick-row
+  document.querySelectorAll('.pick-row').forEach(row => {
+    row.querySelectorAll('.opt').forEach(o => {
+      o.addEventListener('click', () => {
+        row.querySelectorAll('.opt').forEach(x => x.classList.remove('sel'));
+        o.classList.add('sel');
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
