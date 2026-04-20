@@ -298,6 +298,7 @@
 
   let currentConvId = null;
   let pollInterval = null;
+  let audioElement = null;
 
   async function startCall(scriptKey) {
     if (callState === 'connecting' || callState === 'live') {
@@ -339,6 +340,15 @@
   function startPolling() {
     if (!currentConvId) return;
 
+    // Crea elemento audio
+    if (!audioElement) {
+      audioElement = document.createElement('audio');
+      audioElement.style.display = 'none';
+      audioElement.setAttribute('crossorigin', 'anonymous');
+      audioElement.setAttribute('controlsList', 'nodownload');
+      document.body.appendChild(audioElement);
+    }
+
     pollInterval = setInterval(async () => {
       try {
         const backendUrl = 'https://telesales-auto-callback.up.railway.app';
@@ -356,6 +366,12 @@
           marcoTxt.scrollTop = marcoTxt.scrollHeight;
         }
 
+        // Riproduci audio se disponibile
+        if (data.recording_url && audioElement && !audioElement.src) {
+          audioElement.src = data.recording_url;
+          audioElement.play().catch(e => console.log('Audio play error:', e));
+        }
+
         if (data.status === 'ended' || data.status === 'completed') {
           clearInterval(pollInterval);
           setTimeout(() => { if (callState === 'live') endCall(); }, 2000);
@@ -369,6 +385,10 @@
   function endCall() {
     if (pollInterval) clearInterval(pollInterval);
     if (typingTimer) clearTimeout(typingTimer);
+    if (audioElement) {
+      audioElement.pause();
+      audioElement.src = '';
+    }
     setState('ended');
     currentConvId = null;
     setTimeout(() => { if (callState === 'ended') setState('idle'); }, 2800);
