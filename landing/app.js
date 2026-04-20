@@ -296,25 +296,81 @@
     tick();
   }
 
-  function startCall(scriptKey) {
+  let currentConvId = null;
+  let pollInterval = null;
+
+  async function startCall(scriptKey) {
     if (callState === 'connecting' || callState === 'live') {
       endCall(); return;
     }
     setState('connecting');
-    const key = scriptKey || 'default';
-    setTimeout(() => {
-      if (callState !== 'connecting') return;
+
+    try {
+      // Chiama il backend per avviare la demo live
+      const backendUrl = 'https://telesales-auto-callback.up.railway.app';
+      const response = await fetch(`${backendUrl}/demo/start`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone_number: '+393925920000', company: 'Demo Prospect' })
+      });
+
+      if (!response.ok) throw new Error('Failed to start demo');
+
+      const data = await response.json();
+      currentConvId = data.conversation_id;
+
+      setTimeout(() => {
+        if (callState !== 'connecting') return;
+        setState('live');
+        startPolling();
+      }, 1400);
+    } catch (e) {
+      console.error('Demo start error:', e);
+      // Fallback alla simulazione locale
       setState('live');
+      const key = scriptKey || 'default';
       const script = (window.MARCO_SCRIPT[key] || window.MARCO_SCRIPT.default)[currentLang] || window.MARCO_SCRIPT.default.it;
       typeLines(script, () => {
         setTimeout(() => { if (callState === 'live') endCall(); }, 1600);
       });
-    }, 1400);
+    }
+  }
+
+  function startPolling() {
+    if (!currentConvId) return;
+
+    pollInterval = setInterval(async () => {
+      try {
+        const backendUrl = 'https://telesales-auto-callback.up.railway.app';
+        const response = await fetch(`${backendUrl}/demo/status/${currentConvId}`);
+        const data = await response.json();
+
+        if (data.transcript && data.transcript.length > 0) {
+          marcoTxt.innerHTML = '';
+          data.transcript.forEach(t => {
+            const line = document.createElement('div');
+            line.className = `transcript-line ${t.role === 'Marco' ? 'agent' : 'client'}`;
+            line.innerHTML = `<strong>${t.role}:</strong> ${t.message}`;
+            marcoTxt.appendChild(line);
+          });
+          marcoTxt.scrollTop = marcoTxt.scrollHeight;
+        }
+
+        if (data.status === 'ended' || data.status === 'completed') {
+          clearInterval(pollInterval);
+          setTimeout(() => { if (callState === 'live') endCall(); }, 2000);
+        }
+      } catch (e) {
+        console.error('Polling error:', e);
+      }
+    }, 1500);
   }
 
   function endCall() {
+    if (pollInterval) clearInterval(pollInterval);
     if (typingTimer) clearTimeout(typingTimer);
     setState('ended');
+    currentConvId = null;
     setTimeout(() => { if (callState === 'ended') setState('idle'); }, 2800);
   }
 
