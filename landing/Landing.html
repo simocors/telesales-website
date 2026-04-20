@@ -1978,36 +1978,89 @@ window.MARCO_SCRIPT = {
     tick();
   }
 
-  function startCall(scriptKey) {
+  let currentConvId = null;
+  let pollInterval = null;
+  let audioElement = null;
+
+  async function startCall(scriptKey) {
     if (callState === 'connecting' || callState === 'live') {
       endCall(); return;
     }
     setState('connecting');
-    const key = scriptKey || 'default';
-    setTimeout(() => {
-      if (callState !== 'connecting') return;
-      setState('live');
-      const script = (window.MARCO_SCRIPT[key] || window.MARCO_SCRIPT.default)[currentLang] || window.MARCO_SCRIPT.default.it;
 
-      // Aggiungi Web Speech API per far parlare Marco
-      const fullText = script.join(' ');
-      if ('speechSynthesis' in window && fullText) {
-        const utterance = new SpeechSynthesisUtterance(fullText);
-        utterance.lang = currentLang === 'it' ? 'it-IT' : 'en-US';
-        utterance.rate = 0.95;
-        window.speechSynthesis.speak(utterance);
-      }
-
-      typeLines(script, () => {
-        setTimeout(() => { if (callState === 'live') endCall(); }, 1600);
+    try {
+      const backendUrl = 'https://telesales-auto-callback.up.railway.app';
+      const response = await fetch(`${backendUrl}/demo/start`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone_number: '+393925920000', company: 'Demo Prospect' })
       });
-    }, 1400);
+
+      if (!response.ok) throw new Error('Backend error');
+      const data = await response.json();
+      currentConvId = data.conversation_id;
+
+      setTimeout(() => {
+        if (callState !== 'connecting') return;
+        setState('live');
+        startPolling();
+      }, 1400);
+    } catch (e) {
+      console.log('Backend unavailable, using fallback');
+      setState('live');
+      setTimeout(() => {
+        if (callState !== 'connecting') return;
+        const key = scriptKey || 'default';
+        const script = (window.MARCO_SCRIPT[key] || window.MARCO_SCRIPT.default)[currentLang] || window.MARCO_SCRIPT.default.it;
+        typeLines(script, () => {
+          setTimeout(() => { if (callState === 'live') endCall(); }, 1600);
+        });
+      }, 1400);
+    }
+  }
+
+  function startPolling() {
+    if (!currentConvId) return;
+
+    if (!audioElement) {
+      audioElement = document.createElement('audio');
+      audioElement.style.display = 'none';
+      audioElement.setAttribute('crossorigin', 'anonymous');
+      document.body.appendChild(audioElement);
+    }
+
+    pollInterval = setInterval(async () => {
+      try {
+        const backendUrl = 'https://telesales-auto-callback.up.railway.app';
+        const response = await fetch(`${backendUrl}/demo/status/${currentConvId}`);
+        const data = await response.json();
+
+        if (data.recording_url && !audioElement.src) {
+          audioElement.src = data.recording_url;
+          audioElement.play().catch(() => {});
+        }
+
+        if (data.transcript && data.transcript.length > 0) {
+          const lines = data.transcript.map(t => t.message);
+          marcoTxt.textContent = lines.join('\n');
+        }
+
+        if (data.status === 'ended' || data.status === 'completed') {
+          clearInterval(pollInterval);
+          setTimeout(() => { if (callState === 'live') endCall(); }, 2000);
+        }
+      } catch (e) {
+        console.log('Poll error:', e);
+      }
+    }, 1500);
   }
 
   function endCall() {
+    if (pollInterval) clearInterval(pollInterval);
     if (typingTimer) clearTimeout(typingTimer);
-    window.speechSynthesis.cancel();
+    if (audioElement) audioElement.pause();
     setState('ended');
+    currentConvId = null;
     setTimeout(() => { if (callState === 'ended') setState('idle'); }, 2800);
   }
 
