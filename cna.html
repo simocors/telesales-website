@@ -640,18 +640,18 @@
   /* chrome */
   .brand {
     position: fixed;
-    top: 40px;
+    top: 32px;
     left: 48px;
-    font-family: var(--font-sans);
-    font-weight: 600;
-    font-size: 14px;
-    letter-spacing: -.005em;
-    color: var(--fg-soft);
-    opacity: .7;
     z-index: 10;
+    display: flex;
+    align-items: center;
+    opacity: .9;
   }
-  .brand .dot { color: var(--gold-2); }
-  .brand .spark { color: var(--gold-1); }
+  .brand img {
+    height: 28px;
+    width: auto;
+    display: block;
+  }
   .counter {
     position: fixed;
     bottom: 40px;
@@ -704,7 +704,7 @@
 </head>
 <body>
 
-<div class="brand"><span class="spark">⚡</span> telesales<span class="dot">.it</span></div>
+<div class="brand"><img src="assets/logo-telesales-gold.png" alt="Telesales" /></div>
 <div class="counter"><span class="curr" id="curr">01</span> / 03</div>
 <div class="nav-hint">→ avanti · ← indietro</div>
 <button id="fsBtn" class="fs-btn" title="Schermo intero (F)">
