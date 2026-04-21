@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="it" data-theme="dark" data-accent="gold">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Scraping AI — Telesales.it</title>
+<meta name="description" content="127.000 record estratti al giorno da 47 fonti. 194 paesi. 98,4% accuracy. Lead puliti, arricchiti, pronti da chiamare." />
+<link rel="icon" type="image/png" href="../assets/logo-telesales-gold.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/styles.css">
+</head>
+<body>
+
+<!-- ============== NAV ============== -->
+<nav class="nav" id="nav" aria-label="Primary">
+  <div class="container nav-inner">
+    <a href="../" class="logo" aria-label="Telesales home">
+      <img src="../assets/logo-telesales-gold.png" alt="Telesales" class="logo-img">
+    </a>
+    <div class="nav-links">
+      <a href="../ai-voice/">AI Voice</a>
+      <a href="../outreach/">Outreach</a>
+      <a href="../crm/">CRM</a>
+      <a href="../hr/">HR</a>
+      <a href="../scraping/" class="active">Scraping</a>
+      <a href="../eventi/">Eventi</a>
+      <a href="../prodotti-digitali/">Digitali</a>
+      <a href="../marketing/">Marketing</a>
+      <a href="../investitori/">Investitori</a>
+    </div>
+    <div class="nav-right">
+      <a href="#marco" class="btn btn-primary" data-marco-trigger>Parla con Marco</a>
+    </div>
+    <button class="nav-toggle" aria-label="Apri menu" id="navToggle">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- ============== HERO ============== -->
+<header class="hero hero-full">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-lines"></div>
+  <span class="hero-orb o1"></span>
+  <span class="hero-orb o2"></span>
+  <span class="hero-orb o3"></span>
+
+  <div class="container hero-inner">
+    <div class="hero-copy">
+      <div class="section-eyebrow reveal"><span class="eyebrow">— 05 / 09 · Dati</span></div>
+      <h1 class="hero-headline reveal d-1">
+        Dati freschi.<br>
+        <em>Ogni giorno.</em><br>
+        Ovunque.
+      </h1>
+      <p class="hero-sub reveal d-3">
+        Estrazione automatica da quarantasette fonti in parallelo. Centoventisettemila record nuovi ogni giorno, in centonovantaquattro paesi, con accuratezza del novantotto virgola quattro per cento. Arricchiti con email, telefono, ruolo, azienda. Pronti da chiamare domani mattina.
+      </p>
+      <div class="hero-cta reveal d-4">
+        <a href="#marco" class="btn btn-primary" data-marco-trigger>Fatti chiamare ora</a>
+        <a href="#how" class="btn btn-ghost">Come funziona</a>
+      </div>
+      <div class="hero-meta reveal d-5">
+        <span class="mono">127k/day</span>
+        <span>record estratti · 47 fonti · 194 paesi</span>
+      </div>
+    </div>
+
+    <div class="hero-visual reveal d-3" aria-hidden="true">
+      <div class="hero-visual-head">
+        <span class="mono">DATA ENGINE · v2.0</span>
+        <span class="badge-live"><span class="dot"></span>LIVE</span>
+      </div>
+      <div class="hero-visual-center">
+        <div class="wave-stage"></div>
+      </div>
+      <div class="hero-visual-foot">
+        <span class="mono">127.412 record · oggi</span>
+        <span class="mono">98,4% accuracy</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============== PROBLEM ============== -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow"><span class="eyebrow">— Il problema</span></div>
+      <h2 class="section-title">Le liste che compri <em>sono già morte.</em></h2>
+      <p class="section-sub">Ogni database ha la stessa malattia: dati vecchi, campi mancanti, consegna in ritardo. Paghi per cinquantamila contatti, ne sono utili cinquemila, ne chiami duemila, ne chiudi venti. Il problema è alla radice.</p>
+    </div>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <span class="tag">01 · Vecchie</span>
+        <h4>La lista che hai comprato ha due anni.</h4>
+        <p>Il quaranta per cento dei contatti ha cambiato azienda. Il venti per cento ha cambiato ruolo. Le email bounce, i numeri sono cessati. Stai chiamando un'altra epoca.</p>
+      </div>
+      <div class="problem-card">
+        <span class="tag">02 · Incomplete</span>
+        <h4>Mancano email, telefono, o entrambi.</h4>
+        <p>Hai un nome, un'azienda, forse un ruolo. Serve tempo umano per cercare il resto. Due ore al giorno a cliccare profili pubblici per trovare un singolo contatto utile.</p>
+      </div>
+      <div class="problem-card">
+        <span class="tag">03 · Lente</span>
+        <h4>Comprare una lista è un processo di due settimane.</h4>
+        <p>Briefing, quotazione, firma, consegna. Quindici giorni lavorativi. Nel frattempo il mercato si è mosso, il competitor ha già chiamato, il momento è passato.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== HOW ============== -->
+<section class="section" id="how">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow"><span class="eyebrow">— Come funziona</span></div>
+      <h2 class="section-title">Quattro passaggi. <em>Zero attesa.</em></h2>
+      <p class="section-sub">Non è una lista comprata. È un motore che gira ogni giorno, pesca da fonti pubbliche, arricchisce, deduplica, ti consegna il risultato pulito direttamente nel tuo sistema.</p>
+    </div>
+    <div class="steps-grid four">
+      <div class="step">
+        <div class="n">01</div>
+        <h4>Target</h4>
+        <p>Definiamo il profilo cliente ideale: settore, dimensione, ruolo, geografia, segnali di acquisto. L'ICP diventa un filtro operativo, non una slide.</p>
+        <span class="dur">1 giorno</span>
+      </div>
+      <div class="step">
+        <div class="n">02</div>
+        <h4>Fonti</h4>
+        <p>Estrazione in parallelo da quarantasette fonti pubbliche: registri, annunci, portali di settore, dati aperti. Nessuna fonte unica, nessun punto cieco.</p>
+        <span class="dur">continuo</span>
+      </div>
+      <div class="step">
+        <div class="n">03</div>
+        <h4>Arricchimento</h4>
+        <p>Ogni record passa attraverso verifica email, ricerca telefono, attribuzione ruolo, cross-check azienda. Quello che esce è già pronto per essere chiamato.</p>
+        <span class="dur">tempo reale</span>
+      </div>
+      <div class="step">
+        <div class="n">04</div>
+        <h4>Consegna</h4>
+        <p>Lista pulita, deduplicata, segmentata. Direttamente nel tuo gestionale o in Excel, ogni giorno, ogni settimana, come preferisci. Senza alzare il telefono.</p>
+        <span class="dur">daily</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== STATS ============== -->
+<section class="section">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-cell">
+        <div class="n display">127k</div>
+        <div class="l mono">RECORD ESTRATTI<br>OGNI GIORNO</div>
+      </div>
+      <div class="stat-cell">
+        <div class="n display">47</div>
+        <div class="l mono">FONTI PUBBLICHE<br>IN PARALLELO</div>
+      </div>
+      <div class="stat-cell">
+        <div class="n display">194</div>
+        <div class="l mono">PAESI COPERTI<br>SENZA LIMITI</div>
+      </div>
+      <div class="stat-cell">
+        <div class="n display">98,4<span style="font-size:.5em">%</span></div>
+        <div class="l mono">ACCURACY SU DATI<br>VERIFICATI</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== USE CASES ============== -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow"><span class="eyebrow">— Dove funziona</span></div>
+      <h2 class="section-title">Dati che <em>si muovono.</em></h2>
+      <p class="section-sub">Ogni settore ha un suo dataset nascosto nel pubblico. Il nostro motore lo pesca, lo pulisce, te lo consegna. Ecco i casi che vediamo più spesso.</p>
+    </div>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <span class="tag">B2B</span>
+        <h4>Arricchimento contatti.</h4>
+        <p>Hai nome e azienda, ti mancano email e telefono del decisore. Carichi la lista, ti torna completa in ventiquattro ore, già verificata e pronta per la pipeline commerciale.</p>
+      </div>
+      <div class="problem-card">
+        <span class="tag">real estate</span>
+        <h4>Immobiliare e proprietà.</h4>
+        <p>Annunci nuovi ogni giorno su tutti i portali nazionali. Dati proprietari, prezzi, variazioni, storico. Per agenzie, investitori, società di valutazione.</p>
+      </div>
+      <div class="problem-card">
+        <span class="tag">ecommerce</span>
+        <h4>Intelligence sui competitor.</h4>
+        <p>Prezzi, disponibilità, recensioni, variazioni di catalogo. Monitoraggio continuo sui concorrenti diretti. Sai cosa cambia prima che muova il mercato.</p>
+      </div>
+      <div class="problem-card">
+        <span class="tag">procurement</span>
+        <h4>Ricerca fornitori.</h4>
+        <p>Per chi compra: lista strutturata di fornitori per categoria merceologica e geografia, con contatti diretti. Invece di richieste generiche, negoziazioni mirate.</p>
+      </div>
+      <div class="problem-card">
+        <span class="tag">investitori</span>
+        <h4>Fondi e deal flow.</h4>
+        <p>Aziende in crescita, round recenti, segnali di fundraising, movimenti di management. Per fondi, family office, corporate venture. Il deal flow diventa proattivo.</p>
+      </div>
+      <div class="problem-card">
+        <span class="tag">market intel</span>
+        <h4>Dati di mercato.</h4>
+        <p>Dimensioni di settore, trend di prezzo, dati occupazionali, concentrazione competitiva. Per strategy, M&A, investor relations. Report che di solito costano decine di migliaia di euro.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== MARCO WIDGET ============== -->
+<section class="section section-dense" id="marco">
+  <div class="container">
+    <div class="section-head" style="text-align:center; margin:0 auto 40px; max-width:720px;">
+      <div class="section-eyebrow" style="justify-content:center;"><span class="eyebrow">— Demo live</span></div>
+      <h2 class="section-title">Non leggere. <em>Ascolta.</em></h2>
+      <p class="section-sub">
+        Marco è la nostra AI Voice. Lavora sulle liste che il motore dati genera ogni notte: contatti freschi, verificati, pronti da chiamare all'alba. Lascia il tuo numero, capisci come si integrano.
+      </p>
+    </div>
+    <div id="marco-widget" data-marco-auto data-headline="Fatti chiamare da Marco <em>adesso</em>." data-sub="Inserisci il numero di cellulare. Il telefono squilla entro pochi secondi. Marco parla in diretta, in italiano nativo."></div>
+  </div>
+</section>
+
+<!-- ============== FAQ ============== -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow"><span class="eyebrow">— Domande ricorrenti</span></div>
+      <h2 class="section-title">Chiariamo <em>i dubbi</em>.</h2>
+    </div>
+    <div class="faq-grid">
+      <div>
+        <p class="section-sub" style="font-size:14px;">Le domande che ci fanno tutti al primo incontro. Se ne hai altre, Marco risponde sopra.</p>
+      </div>
+      <div>
+        <details class="faq-item" open>
+          <summary class="faq-q">È legale estrarre questi dati?<span class="faq-toggle">+</span></summary>
+          <div class="faq-a"><div class="faq-a-inner">Sì. Lavoriamo solo su fonti pubbliche, registri camerali, siti aziendali, annunci, dati aperti. Rispettiamo termini di servizio, robot.txt, rate limit. Non tocchiamo contenuti dietro login o aree private.</div></div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-q">Come gestite il GDPR?<span class="faq-toggle">+</span></summary>
+          <div class="faq-a"><div class="faq-a-inner">Dati B2B su persone in ruolo aziendale, base giuridica di legittimo interesse. Informativa e opt-out gestiti correttamente, cancellazioni rispettate nelle ventiquattr'ore. Ti consegniamo anche la documentazione necessaria per il tuo registro trattamenti.</div></div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-q">Quanto costa per diecimila record?<span class="faq-toggle">+</span></summary>
+          <div class="faq-a"><div class="faq-a-inner">Dipende dal livello di arricchimento e dalla verticale. Una lista B2B arricchita completa parte da alcune centinaia di euro per diecimila record. Molto meno dei provider tradizionali, con dati freschi e non condivisi con altri.</div></div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-q">Gestite la deduplica?<span class="faq-toggle">+</span></summary>
+          <div class="faq-a"><div class="faq-a-inner">Sì, sia interna alla lista sia incrociata con il tuo database esistente. Carichi i contatti già tuoi e ti consegniamo solo contatti nuovi, mai i duplicati. Nessuna chiamata fatta due volte.</div></div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-q">Quali fonti usate?<span class="faq-toggle">+</span></summary>
+          <div class="faq-a"><div class="faq-a-inner">Registri camerali europei, portali di settore, annunci di lavoro, dati aperti istituzionali, directory aziendali, siti corporate. Quarantasette fonti in rotazione. Per clienti enterprise possiamo aggiungere fonti dedicate al settore specifico.</div></div>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== CTA ============== -->
+<section class="section">
+  <div class="container">
+    <div class="cta-block">
+      <div class="cta-inner">
+        <div class="section-eyebrow"><span class="eyebrow">— Pronto a scalare?</span></div>
+        <h2 class="section-title">Accendiamo il tuo <em>motore dati</em>.</h2>
+        <p class="section-sub">In una settimana ricevi il primo dataset pulito, arricchito, pronto da chiamare. Parli con Marco, ci racconti il tuo ICP, torniamo con un campione reale e una proposta.</p>
+        <div class="hero-cta" style="margin-top:24px;">
+          <a href="#marco" class="btn btn-primary" data-marco-trigger>Parla con Marco</a>
+          <a href="mailto:hello@telesales.it" class="btn btn-ghost">Scrivici</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== FOOTER ============== -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-cols">
+      <div>
+        <a href="../" class="logo"><img src="../assets/logo-telesales-gold.png" alt="Telesales" class="logo-img"></a>
+        <p class="section-sub" style="margin-top:12px; font-size:14px;">Infrastrutture AI per aziende serie. Made in Italy.</p>
+      </div>
+      <div>
+        <div class="eyebrow" style="margin-bottom:14px;">Prodotti</div>
+        <div class="footer-links">
+          <a href="../ai-voice/">AI Voice</a>
+          <a href="../outreach/">Outreach</a>
+          <a href="../crm/">CRM</a>
+          <a href="../hr/">HR</a>
+          <a href="../scraping/">Scraping</a>
+        </div>
+      </div>
+      <div>
+        <div class="eyebrow" style="margin-bottom:14px;">Azienda</div>
+        <div class="footer-links">
+          <a href="../eventi/">Eventi</a>
+          <a href="../prodotti-digitali/">Digitali</a>
+          <a href="../marketing/">Marketing</a>
+          <a href="../investitori/">Investitori</a>
+          <a href="mailto:hello@telesales.it">Contatti</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="mono">© 2026 Telesales.it · Tutti i diritti riservati</span>
+      <span class="mono">Made with AI in Italy</span>
+    </div>
+  </div>
+</footer>
+
+<script defer src="../shared/marco.js"></script>
+<script>
+  var nav = document.getElementById('nav');
+  window.addEventListener('scroll', function () {
+    if (window.scrollY > 10) nav.classList.add('scrolled'); else nav.classList.remove('scrolled');
+  });
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        e.target.style.opacity = 1;
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: .12 });
+  document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+  var toggle = document.getElementById('navToggle');
+  if (toggle) toggle.addEventListener('click', function () { nav.classList.toggle('menu-open'); });
+</script>
+</body>
+</html>
