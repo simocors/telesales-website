@@ -227,7 +227,7 @@
   <div class="hero">
     <div class="kicker">— Demo live CNA</div>
     <h1>Ti chiama <em>Marco</em> in 10 secondi.</h1>
-    <p class="sub">Lascia il tuo numero. L'AI ti richiama subito e ti fa una chiacchierata reale.</p>
+    <p class="sub">Lascia il tuo numero. L'AI ti richiama entro 30 secondi e ti fa una chiacchierata reale. <span style="color:var(--fg-dim);font-size:14px;display:block;margin-top:8px">Se hai iPhone, disattiva "Silenzia numeri sconosciuti" prima di premere il bottone.</span></p>
 
     <form id="f">
       <div class="label">Numero di telefono</div>
@@ -272,6 +272,25 @@
     status.innerHTML = html;
   }
 
+  async function triggerCall(num) {
+    const r = await fetch('https://api.elevenlabs.io/v1/convai/sip-trunk/outbound-call', {
+      method: 'POST',
+      headers: {
+        'xi-api-key': ELEVENLABS_API_KEY,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        agent_id: AGENT_ID,
+        agent_phone_number_id: PHONE_NUMBER_ID,
+        to_number: num
+      })
+    });
+    const text = await r.text();
+    let data = {};
+    try { data = JSON.parse(text); } catch {}
+    return { ok: r.ok, status: r.status, data, raw: text };
+  }
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const num = normalize(phone.value);
@@ -283,47 +302,52 @@
     btn.innerHTML = '<span class="spinner"></span> Sto chiamando...';
     setStatus('load', '<span class="spinner"></span> Inoltro la chiamata a Marco...');
 
-    try {
-      const r = await fetch('https://api.elevenlabs.io/v1/convai/sip-trunk/outbound-call', {
-        method: 'POST',
-        headers: {
-          'xi-api-key': ELEVENLABS_API_KEY,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          agent_id: AGENT_ID,
-          agent_phone_number_id: PHONE_NUMBER_ID,
-          to_number: num
-        })
-      });
-      const text = await r.text();
-      let data = {};
-      try { data = JSON.parse(text); } catch {}
+    const MAX_ATTEMPTS = 3;
+    let lastErr = null;
+    for (let i = 1; i <= MAX_ATTEMPTS; i++) {
+      try {
+        if (i > 1) setStatus('load', `<span class="spinner"></span> Squillo respinto, riprovo (${i}/${MAX_ATTEMPTS})...`);
 
-      if (!r.ok) {
-        const msg = data?.detail?.message || data?.detail || data?.error || ('HTTP ' + r.status);
-        throw new Error(typeof msg === 'string' ? msg : JSON.stringify(msg));
-      }
-      if (data && data.success === false) {
-        const raw = data.message || 'chiamata rifiutata';
-        let hint = raw;
-        if (/486/.test(raw) || /busy/i.test(raw)) {
-          hint = 'Telefono occupato o filtro "Silenzia numeri sconosciuti" attivo. Disattivalo in Impostazioni → Telefono e riprova.';
-        } else if (/480|temporarily unavailable/i.test(raw)) {
-          hint = 'Numero non raggiungibile in questo momento.';
-        } else if (/403|forbidden|not allowed/i.test(raw)) {
-          hint = 'Operatore blocca la chiamata in ingresso.';
+        const { ok, status, data } = await triggerCall(num);
+
+        if (!ok) {
+          const msg = data?.detail?.message || data?.detail || data?.error || ('HTTP ' + status);
+          throw new Error(typeof msg === 'string' ? msg : JSON.stringify(msg));
         }
-        throw new Error(hint);
-      }
 
-      setStatus('ok', '✓ Fatto. Il tuo telefono squillerà entro 10 secondi.<br>Rispondi e parla con Marco.');
-      btn.innerHTML = 'Chiamata inoltrata ✓';
-    } catch (err) {
-      setStatus('err', 'Errore: ' + (err.message || 'riprova tra qualche secondo.'));
-      btn.disabled = false;
-      btn.innerHTML = 'Riprova →';
+        const failed = data && data.success === false;
+        if (failed) {
+          const raw = data.message || 'chiamata rifiutata';
+          // se è "busy" ritentiamo (tipico con iPhone "silenzia sconosciuti")
+          if ((/486/.test(raw) || /busy/i.test(raw)) && i < MAX_ATTEMPTS) {
+            lastErr = raw;
+            await new Promise(r => setTimeout(r, 3000));
+            continue;
+          }
+          let hint = raw;
+          if (/486/.test(raw) || /busy/i.test(raw)) {
+            hint = 'Telefono respinge chiamate sconosciute. Disattiva "Silenzia numeri sconosciuti" in Impostazioni → Telefono.';
+          } else if (/480|temporarily unavailable/i.test(raw)) {
+            hint = 'Numero non raggiungibile in questo momento.';
+          } else if (/403|forbidden|not allowed/i.test(raw)) {
+            hint = 'Operatore blocca la chiamata in ingresso.';
+          }
+          throw new Error(hint);
+        }
+
+        // success
+        setStatus('ok', '✓ Fatto. Il tuo telefono squillerà a secondi.<br>Rispondi e parla con Marco.');
+        btn.innerHTML = 'Chiamata inoltrata ✓';
+        return;
+      } catch (err) {
+        lastErr = err.message || 'errore sconosciuto';
+        if (i === MAX_ATTEMPTS) break;
+      }
     }
+
+    setStatus('err', 'Non risposto dopo 3 tentativi: ' + lastErr);
+    btn.disabled = false;
+    btn.innerHTML = 'Riprova →';
   });
 })();
 </script>
