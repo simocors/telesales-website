@@ -304,6 +304,18 @@
         const msg = data?.detail?.message || data?.detail || data?.error || ('HTTP ' + r.status);
         throw new Error(typeof msg === 'string' ? msg : JSON.stringify(msg));
       }
+      if (data && data.success === false) {
+        const raw = data.message || 'chiamata rifiutata';
+        let hint = raw;
+        if (/486/.test(raw) || /busy/i.test(raw)) {
+          hint = 'Telefono occupato o filtro "Silenzia numeri sconosciuti" attivo. Disattivalo in Impostazioni → Telefono e riprova.';
+        } else if (/480|temporarily unavailable/i.test(raw)) {
+          hint = 'Numero non raggiungibile in questo momento.';
+        } else if (/403|forbidden|not allowed/i.test(raw)) {
+          hint = 'Operatore blocca la chiamata in ingresso.';
+        }
+        throw new Error(hint);
+      }
 
       setStatus('ok', '✓ Fatto. Il tuo telefono squillerà entro 10 secondi.<br>Rispondi e parla con Marco.');
       btn.innerHTML = 'Chiamata inoltrata ✓';
