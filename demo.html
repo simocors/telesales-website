@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<meta name="theme-color" content="#050508" />
+<title>Telesales · Chiamami Marco</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,400&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink-0: #050508;
+    --fg: #f4f1e8;
+    --fg-soft: #c9c6bc;
+    --fg-dim: #706e65;
+    --gold-1: #f5e7a8;
+    --gold-2: #d4af37;
+    --gold-3: #7a5e18;
+    --live: #22c55e;
+    --grad-gold: linear-gradient(135deg, #f5e7a8 0%, #d4af37 50%, #7a5e18 100%);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    background: var(--ink-0);
+    color: var(--fg);
+    font-family: "Geist", -apple-system, BlinkMacSystemFont, sans-serif;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 50% at 20% 10%, rgba(245,231,168,.12), transparent 60%),
+      radial-gradient(ellipse 60% 50% at 80% 90%, rgba(212,175,55,.14), transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .wrap {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 32px 24px 40px;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10vh;
+  }
+  .brand {
+    font-family: "Geist";
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--fg-soft);
+  }
+  .brand .spark { color: var(--gold-1); margin-right: 4px; }
+  .brand .dot { color: var(--gold-2); }
+  .live {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px;
+    letter-spacing: .24em;
+    text-transform: uppercase;
+    color: var(--live);
+  }
+  .live .d {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--live);
+    box-shadow: 0 0 0 0 rgba(34,197,94,.6);
+    animation: pulse 1.8s infinite;
+  }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(34,197,94,.6); }
+    70% { box-shadow: 0 0 0 14px rgba(34,197,94,0); }
+    100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
+  }
+  .hero {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .kicker {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: var(--gold-2);
+    margin-bottom: 20px;
+  }
+  h1 {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 300;
+    font-size: clamp(40px, 10vw, 56px);
+    line-height: 1.02;
+    letter-spacing: -.03em;
+    margin-bottom: 18px;
+  }
+  h1 em {
+    font-style: italic;
+    background: var(--grad-gold);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .sub {
+    color: var(--fg-soft);
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 40px;
+  }
+  form { display: flex; flex-direction: column; gap: 14px; }
+  .label {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px;
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+  }
+  .input {
+    -webkit-appearance: none;
+    appearance: none;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(245,231,168,.22);
+    border-radius: 14px;
+    padding: 20px 22px;
+    font-family: "Geist", sans-serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--fg);
+    outline: none;
+    transition: all .25s;
+    letter-spacing: .02em;
+  }
+  .input::placeholder { color: var(--fg-dim); }
+  .input:focus {
+    border-color: var(--gold-2);
+    background: rgba(245,231,168,.06);
+    box-shadow: 0 0 0 4px rgba(212,175,55,.1);
+  }
+  .btn {
+    margin-top: 8px;
+    padding: 22px 28px;
+    border: 0;
+    border-radius: 14px;
+    font-family: "Geist", sans-serif;
+    font-weight: 600;
+    font-size: 17px;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    background: var(--grad-gold);
+    color: #0a0a10;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 16px 48px rgba(212,175,55,.32);
+    transition: transform .15s, box-shadow .25s, opacity .2s;
+  }
+  .btn:active { transform: scale(.98); }
+  .btn:disabled { opacity: .5; cursor: not-allowed; }
+  .status {
+    margin-top: 16px;
+    padding: 16px 18px;
+    border-radius: 12px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    letter-spacing: .04em;
+    display: none;
+  }
+  .status.show { display: block; }
+  .status.ok {
+    background: rgba(34,197,94,.08);
+    border: 1px solid rgba(34,197,94,.3);
+    color: #7de5a0;
+  }
+  .status.err {
+    background: rgba(255,90,90,.08);
+    border: 1px solid rgba(255,90,90,.3);
+    color: #ffb4b4;
+  }
+  .status.load {
+    background: rgba(245,231,168,.06);
+    border: 1px solid rgba(245,231,168,.25);
+    color: var(--gold-1);
+  }
+  .foot {
+    margin-top: 24px;
+    text-align: center;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+  }
+  .spinner {
+    display: inline-block;
+    width: 14px; height: 14px;
+    border: 2px solid rgba(245,231,168,.2);
+    border-top-color: var(--gold-1);
+    border-radius: 50%;
+    animation: spin .7s linear infinite;
+    vertical-align: -2px;
+    margin-right: 8px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="brand"><span class="spark">⚡</span>telesales<span class="dot">.it</span></div>
+    <div class="live"><span class="d"></span>Marco · Live</div>
+  </div>
+
+  <div class="hero">
+    <div class="kicker">— Demo live CNA</div>
+    <h1>Ti chiama <em>Marco</em> in 10 secondi.</h1>
+    <p class="sub">Lascia il tuo numero. L'AI ti richiama subito e ti fa una chiacchierata reale.</p>
+
+    <form id="f">
+      <div class="label">Numero di telefono</div>
+      <input class="input" id="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+39 ..." required />
+      <button class="btn" id="btn" type="submit">Chiamami ora →</button>
+    </form>
+
+    <div class="status" id="status"></div>
+  </div>
+
+  <div class="foot">Telesales · AI Voice · Marco Ferretti v2.0</div>
+</div>
+
+<script>
+(function() {
+  // ==== CONFIG ====
+  // NOTA: la API key qui sotto è visibile nel codice sorgente.
+  // Dopo la demo CNA va RIGENERATA su elevenlabs.io/app/settings/api-keys
+  // (demo una-tantum — chiave limitata temporaneamente).
+  const ELEVENLABS_API_KEY = "3ff8fd353d2754bf2a98fa448f38e38826c1261e73984fff80b740f4d022497c";
+  const AGENT_ID = "agent_5301kpdv4sd9e15vcz4qpm8e7vrn";         // Marco Ferretti 2.0
+  const PHONE_NUMBER_ID = "phnum_1001kn4a2xjaenf9516b2fb5azxe";  // Telnyx Italia
+
+  const form = document.getElementById('f');
+  const phone = document.getElementById('phone');
+  const btn = document.getElementById('btn');
+  const status = document.getElementById('status');
+
+  function normalize(raw) {
+    let v = (raw || '').replace(/[^\d+]/g, '').trim();
+    if (!v) return '';
+    if (v.startsWith('00')) v = '+' + v.slice(2);
+    if (!v.startsWith('+')) {
+      if (v.startsWith('39')) v = '+' + v;
+      else v = '+39' + v;
+    }
+    return v;
+  }
+
+  function setStatus(type, html) {
+    status.className = 'status show ' + type;
+    status.innerHTML = html;
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const num = normalize(phone.value);
+    if (!/^\+\d{9,15}$/.test(num)) {
+      setStatus('err', 'Numero non valido. Riprova con prefisso internazionale.');
+      return;
+    }
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span> Sto chiamando...';
+    setStatus('load', '<span class="spinner"></span> Inoltro la chiamata a Marco...');
+
+    try {
+      const r = await fetch('https://api.elevenlabs.io/v1/convai/sip-trunk/outbound-call', {
+        method: 'POST',
+        headers: {
+          'xi-api-key': ELEVENLABS_API_KEY,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          agent_id: AGENT_ID,
+          agent_phone_number_id: PHONE_NUMBER_ID,
+          to_number: num
+        })
+      });
+      const text = await r.text();
+      let data = {};
+      try { data = JSON.parse(text); } catch {}
+
+      if (!r.ok) {
+        const msg = data?.detail?.message || data?.detail || data?.error || ('HTTP ' + r.status);
+        throw new Error(typeof msg === 'string' ? msg : JSON.stringify(msg));
+      }
+
+      setStatus('ok', '✓ Fatto. Il tuo telefono squillerà entro 10 secondi.<br>Rispondi e parla con Marco.');
+      btn.innerHTML = 'Chiamata inoltrata ✓';
+    } catch (err) {
+      setStatus('err', 'Errore: ' + (err.message || 'riprova tra qualche secondo.'));
+      btn.disabled = false;
+      btn.innerHTML = 'Riprova →';
+    }
+  });
+})();
+</script>
+</body>
+</html>
