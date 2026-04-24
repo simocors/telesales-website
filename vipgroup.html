@@ -1,0 +1,1658 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>VIP Group · Telesales.it</title>
+<link rel="icon" type="image/png" href="assets/logo-telesales-gold.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink-0: #050508;
+    --ink-1: #0a0a10;
+    --ink-2: #11111a;
+    --fg: #f4f1e8;
+    --fg-soft: #c9c6bc;
+    --fg-dim: #706e65;
+    --accent: #d4af37;
+    --accent-2: #f5e7a8;
+    --gold-1: #f5e7a8;
+    --gold-2: #d4af37;
+    --gold-3: #7a5e18;
+    --live: #22c55e;
+    --grad-orange: linear-gradient(135deg, #f5e7a8 0%, #d4af37 55%, #7a5e18 100%);
+    --grad-gold: linear-gradient(135deg, #f5e7a8 0%, #d4af37 50%, #7a5e18 100%);
+    --grad-mixed: linear-gradient(120deg, #f9ecc0 0%, #f5e7a8 30%, #d4af37 70%, #7a5e18 100%);
+    --font-display: "Fraunces", Georgia, serif;
+    --font-sans: "Geist", -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--ink-0);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    -webkit-font-smoothing: antialiased;
+  }
+  .call-form, .call-form * { cursor: auto; }
+  .call-btn { cursor: pointer; }
+  .call-btn:disabled { cursor: not-allowed; }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 55% 40% at 20% 15%, rgba(245,231,168,.14), transparent 55%),
+      radial-gradient(ellipse 50% 45% at 82% 75%, rgba(212,175,55,.16), transparent 60%),
+      radial-gradient(ellipse 70% 50% at 50% 100%, rgba(122,94,24,.12), transparent 55%);
+    pointer-events: none;
+    z-index: 0;
+    animation: breathe 12s ease-in-out infinite;
+  }
+  @keyframes breathe {
+    0%, 100% { opacity: .85; }
+    50% { opacity: 1; }
+  }
+
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .3 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: .5;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+    z-index: 1;
+  }
+
+  .deck {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    z-index: 2;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8vh 9vw;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(10px);
+    transition: opacity .7s ease, transform .7s ease;
+    overflow: hidden;
+  }
+  .slide.active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: clamp(11px, .85vw, 13px);
+    letter-spacing: .26em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 28px;
+  }
+  .kicker .line {
+    width: 36px; height: 1px;
+    background: var(--accent);
+  }
+
+  .display {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(44px, 6.4vw, 110px);
+    letter-spacing: -.035em;
+    line-height: .98;
+  }
+  .display em {
+    font-style: italic;
+    background: var(--grad-orange);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding-right: 4px;
+  }
+  .display .gold {
+    font-style: italic;
+    background: var(--grad-gold);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .display .soft { color: var(--fg-dim); }
+
+  .lead {
+    font-family: var(--font-sans);
+    font-weight: 300;
+    font-size: clamp(16px, 1.3vw, 22px);
+    line-height: 1.5;
+    color: var(--fg-soft);
+    max-width: 820px;
+    margin-top: 28px;
+  }
+
+  /* ===== SLIDE 1 · COVER ===== */
+  .cover {
+    align-items: flex-start;
+    justify-content: flex-end;
+  }
+  .cover .eyebrow-top {
+    font-family: var(--font-mono);
+    font-size: clamp(11px, .9vw, 13px);
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 32px;
+  }
+  .cover .wordmark {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-style: italic;
+    font-size: clamp(100px, 15vw, 260px);
+    line-height: .9;
+    letter-spacing: -.045em;
+    background: var(--grad-mixed);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 24px;
+  }
+  .cover .subtitle {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(22px, 2.4vw, 42px);
+    line-height: 1.15;
+    color: var(--fg-soft);
+    max-width: 780px;
+    margin-bottom: 48px;
+  }
+  .cover .tag {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100%;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,.08);
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .cover .tag .l {
+    font-family: var(--font-mono);
+    font-size: clamp(11px, .9vw, 13px);
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--fg-soft);
+    line-height: 1.6;
+  }
+  .cover .tag .r {
+    font-family: var(--font-mono);
+    font-size: clamp(10.5px, .8vw, 12px);
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+    text-align: right;
+  }
+
+  /* ===== TRIPLETTA (3 colonne problema) ===== */
+  .triple {
+    margin-top: 6vh;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3vw;
+    width: 100%;
+  }
+  .tcol {
+    padding-top: 24px;
+    border-top: 1px solid rgba(212,175,55,.28);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .tcol-num {
+    font-family: var(--font-mono);
+    font-size: clamp(10.5px, .85vw, 12px);
+    letter-spacing: .3em;
+    color: var(--accent);
+  }
+  .tcol-big {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(28px, 3.2vw, 50px);
+    line-height: 1.04;
+    letter-spacing: -.02em;
+    color: var(--fg);
+  }
+  .tcol-big em {
+    font-style: italic;
+    background: var(--grad-orange);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .tcol-s {
+    font-family: var(--font-mono);
+    font-size: clamp(10.5px, .82vw, 12px);
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+    line-height: 1.6;
+    margin-top: 6px;
+  }
+
+  /* ===== DOPPIA COLONNA (abbiamo capito voi) ===== */
+  .duo {
+    margin-top: 6vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4vw;
+    width: 100%;
+  }
+  .dcol {
+    padding: 28px 26px;
+    border: 1px solid rgba(245,231,168,.18);
+    border-radius: 18px;
+    background: linear-gradient(180deg, rgba(245,231,168,.035), rgba(245,231,168,.005));
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .dcol-tag {
+    font-family: var(--font-mono);
+    font-size: clamp(10.5px, .85vw, 12px);
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: var(--accent-2);
+  }
+  .dcol-title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(26px, 2.8vw, 48px);
+    line-height: 1.05;
+    letter-spacing: -.02em;
+    color: var(--fg);
+  }
+  .dcol-title em {
+    font-style: italic;
+    background: var(--grad-orange);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .dcol-desc {
+    font-family: var(--font-sans);
+    font-weight: 300;
+    font-size: clamp(14px, 1.1vw, 18px);
+    color: var(--fg-soft);
+    line-height: 1.55;
+  }
+  .dcol-meta {
+    margin-top: auto;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255,255,255,.06);
+    font-family: var(--font-mono);
+    font-size: clamp(10.5px, .8vw, 12px);
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+  }
+
+  /* ===== FUNNEL (stessa CNA) ===== */
+  .funnel {
+    margin-top: 6vh;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.5vw;
+    align-items: stretch;
+    width: 100%;
+    position: relative;
+  }
+  .stage {
+    position: relative;
+    padding: 24px 20px 28px;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 16px;
+    background: linear-gradient(180deg, rgba(255,255,255,.025), rgba(255,255,255,0));
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: all .4s;
+  }
+  .stage.highlight {
+    border-color: rgba(245,231,168,.28);
+    background: linear-gradient(180deg, rgba(245,231,168,.055), rgba(245,231,168,.015));
+    box-shadow: 0 0 0 1px rgba(245,231,168,.14), 0 20px 60px rgba(245,231,168,.08);
+  }
+  .stage.human {
+    border-color: rgba(245,231,168,.35);
+    background: linear-gradient(180deg, rgba(245,231,168,.08), rgba(212,175,55,.02));
+    box-shadow: 0 0 0 1px rgba(212,175,55,.2), 0 20px 60px rgba(212,175,55,.12);
+  }
+  .stage .who {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: .24em;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+  }
+  .stage.highlight .who { color: var(--accent-2); }
+  .stage.human .who { color: var(--gold-1); }
+  .stage .big {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-style: italic;
+    font-size: clamp(38px, 4.6vw, 78px);
+    line-height: .95;
+    letter-spacing: -.03em;
+    color: var(--fg);
+  }
+  .stage.highlight .big {
+    background: var(--grad-orange);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .stage.human .big {
+    background: var(--grad-gold);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .stage .lbl {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(15px, 1.3vw, 20px);
+    line-height: 1.2;
+    letter-spacing: -.01em;
+    color: var(--fg);
+  }
+  .stage .desc {
+    font-family: var(--font-mono);
+    font-size: clamp(9.5px, .72vw, 11px);
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+    line-height: 1.55;
+    margin-top: auto;
+  }
+  .legend {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 3vh;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,.06);
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-mono);
+    font-size: clamp(11px, .85vw, 13px);
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--fg-soft);
+  }
+  .legend-item .sw {
+    width: 22px; height: 2px; border-radius: 2px;
+  }
+  .legend-item.ai .sw { background: var(--gold-1); }
+  .legend-item.human .sw { background: var(--gold-2); }
+
+  /* ===== 4 STEPS (cosa fa l'AI) ===== */
+  .steps4 {
+    margin-top: 6vh;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2.5vw;
+    width: 100%;
+  }
+  .step4 {
+    padding-top: 22px;
+    border-top: 1px solid rgba(212,175,55,.25);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .step4 .n {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: .3em;
+    color: var(--accent);
+  }
+  .step4 .t {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(22px, 2.4vw, 36px);
+    line-height: 1.05;
+    letter-spacing: -.02em;
+    color: var(--fg);
+  }
+  .step4 .t em {
+    font-style: italic;
+    background: var(--grad-orange);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .step4 .d {
+    font-family: var(--font-sans);
+    font-weight: 300;
+    font-size: clamp(13px, 1vw, 16px);
+    color: var(--fg-soft);
+    line-height: 1.55;
+  }
+  .step4 .dur {
+    margin-top: auto;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+    padding-top: 8px;
+  }
+
+  /* ===== STACK / INCLUDE ===== */
+  .stack {
+    margin-top: 5vh;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5vw 3vw;
+    width: 100%;
+  }
+  .scell {
+    padding: 20px 0 18px;
+    border-top: 1px solid rgba(255,255,255,.08);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .scell .num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: .22em;
+    color: var(--accent);
+  }
+  .scell h3 {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(20px, 2.1vw, 30px);
+    line-height: 1.1;
+    letter-spacing: -.015em;
+    color: var(--fg);
+  }
+  .scell h3 em {
+    font-style: italic;
+    background: var(--grad-orange);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .scell p {
+    font-family: var(--font-sans);
+    font-weight: 300;
+    font-size: clamp(13px, 1vw, 15px);
+    color: var(--fg-soft);
+    line-height: 1.5;
+    margin-top: 2px;
+  }
+
+  /* ===== TIMELINE ===== */
+  .timeline {
+    margin-top: 6vh;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2vw;
+    width: 100%;
+    position: relative;
+  }
+  .tlstep {
+    padding: 22px 22px 24px;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 16px;
+    background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 200px;
+  }
+  .tlstep.go {
+    border-color: rgba(245,231,168,.32);
+    background: linear-gradient(180deg, rgba(245,231,168,.06), rgba(212,175,55,.015));
+    box-shadow: 0 0 0 1px rgba(245,231,168,.12), 0 18px 50px rgba(212,175,55,.1);
+  }
+  .tlstep .w {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .tlstep .t {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(20px, 2vw, 30px);
+    line-height: 1.1;
+    letter-spacing: -.015em;
+    color: var(--fg);
+  }
+  .tlstep .t em {
+    font-style: italic;
+    background: var(--grad-orange);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .tlstep ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 4px;
+  }
+  .tlstep ul li {
+    font-family: var(--font-mono);
+    font-size: clamp(10px, .78vw, 12px);
+    letter-spacing: .08em;
+    color: var(--fg-soft);
+    line-height: 1.55;
+    padding-left: 14px;
+    position: relative;
+  }
+  .tlstep ul li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--accent);
+  }
+
+  /* ===== PRICING ===== */
+  .price-grid {
+    margin-top: 5vh;
+    display: grid;
+    grid-template-columns: 1.1fr 1.1fr 1fr;
+    gap: 3vw;
+    width: 100%;
+    align-items: stretch;
+  }
+  .pcard {
+    padding: 32px 30px;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 22px;
+    background: linear-gradient(180deg, rgba(255,255,255,.025), rgba(255,255,255,0));
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .pcard.feature {
+    border-color: rgba(245,231,168,.38);
+    background: linear-gradient(180deg, rgba(245,231,168,.08), rgba(212,175,55,.015));
+    box-shadow: 0 0 0 1px rgba(245,231,168,.16), 0 28px 80px rgba(212,175,55,.14);
+  }
+  .pcard .phead {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .pcard.feature .phead { color: var(--gold-1); }
+  .pcard .pprice {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(42px, 5vw, 78px);
+    line-height: 1;
+    letter-spacing: -.03em;
+    color: var(--fg);
+  }
+  .pcard .pprice .small {
+    font-size: .38em;
+    font-family: var(--font-mono);
+    letter-spacing: .1em;
+    color: var(--fg-dim);
+    text-transform: uppercase;
+    margin-left: 6px;
+  }
+  .pcard.feature .pprice {
+    background: var(--grad-orange);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .pcard .plabel {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: clamp(15px, 1.2vw, 19px);
+    color: var(--fg);
+    line-height: 1.35;
+  }
+  .pcard .plist {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 6px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255,255,255,.06);
+  }
+  .pcard .plist li {
+    font-family: var(--font-mono);
+    font-size: clamp(10.5px, .82vw, 12.5px);
+    letter-spacing: .06em;
+    color: var(--fg-soft);
+    line-height: 1.55;
+    padding-left: 16px;
+    position: relative;
+  }
+  .pcard .plist li::before {
+    content: "·";
+    position: absolute;
+    left: 4px;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .pcard .pfoot {
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255,255,255,.06);
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+    line-height: 1.6;
+  }
+
+  .price-note {
+    margin-top: 3vh;
+    padding: 18px 24px;
+    border: 1px dashed rgba(245,231,168,.28);
+    border-radius: 14px;
+    background: rgba(245,231,168,.03);
+    font-family: var(--font-mono);
+    font-size: clamp(11px, .88vw, 13px);
+    letter-spacing: .1em;
+    color: var(--gold-1);
+    line-height: 1.6;
+  }
+  .price-note strong {
+    color: var(--fg);
+    font-weight: 500;
+  }
+
+  /* ===== PROOF STATS ===== */
+  .proof {
+    margin-top: 5vh;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2vw;
+    width: 100%;
+  }
+  .pstat {
+    padding-top: 22px;
+    border-top: 1px solid rgba(245,231,168,.22);
+  }
+  .pstat .n {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-style: italic;
+    font-size: clamp(44px, 5.4vw, 90px);
+    line-height: .95;
+    letter-spacing: -.03em;
+    background: var(--grad-orange);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .pstat .l {
+    margin-top: 8px;
+    font-family: var(--font-mono);
+    font-size: clamp(10px, .78vw, 12px);
+    letter-spacing: .24em;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+    line-height: 1.55;
+  }
+  .diff {
+    margin-top: 5vh;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5vw;
+    width: 100%;
+    padding-top: 28px;
+    border-top: 1px solid rgba(255,255,255,.06);
+  }
+  .diff div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .diff .h {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .diff .p {
+    font-family: var(--font-sans);
+    font-weight: 300;
+    font-size: clamp(15px, 1.2vw, 19px);
+    color: var(--fg-soft);
+    line-height: 1.5;
+  }
+
+  /* ===== TERMS ===== */
+  .terms {
+    margin-top: 5vh;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2vw 4vw;
+    width: 100%;
+  }
+  .term-row {
+    padding: 18px 0;
+    border-bottom: 1px solid rgba(255,255,255,.07);
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .term-row .k {
+    font-family: var(--font-mono);
+    font-size: clamp(10.5px, .85vw, 12.5px);
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+  }
+  .term-row .v {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: clamp(14px, 1.1vw, 17px);
+    color: var(--fg);
+    text-align: right;
+    line-height: 1.4;
+    max-width: 60%;
+  }
+  .term-row .v em {
+    font-style: italic;
+    background: var(--grad-orange);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* ===== DEMO (stessa CNA) ===== */
+  .demo-split {
+    margin-top: 3vh;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 5vw;
+    align-items: center;
+    width: 100%;
+  }
+  .demo-left { display: flex; flex-direction: column; gap: 3vh; }
+  .demo-right-form { display: flex; flex-direction: column; }
+
+  .call-form { display: flex; flex-direction: column; gap: 16px; width: 100%; }
+  .call-label {
+    font-family: var(--font-mono);
+    font-size: clamp(10.5px, .85vw, 12.5px);
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+  }
+  .call-input {
+    -webkit-appearance: none;
+    appearance: none;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(245,231,168,.22);
+    border-radius: 16px;
+    padding: 26px 28px;
+    font-family: var(--font-sans);
+    font-size: clamp(22px, 2.2vw, 34px);
+    font-weight: 400;
+    color: var(--fg);
+    outline: none;
+    transition: all .25s;
+    letter-spacing: .02em;
+    caret-color: var(--gold-2);
+  }
+  .call-input::placeholder { color: var(--fg-dim); }
+  .call-input:focus {
+    border-color: var(--gold-2);
+    background: rgba(245,231,168,.06);
+    box-shadow: 0 0 0 5px rgba(212,175,55,.12);
+  }
+  .call-btn {
+    margin-top: 6px;
+    padding: 26px 30px;
+    border: 0;
+    border-radius: 16px;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: clamp(16px, 1.3vw, 20px);
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    background: var(--grad-gold);
+    color: #0a0a10;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    box-shadow: 0 20px 60px rgba(212,175,55,.35);
+    transition: transform .15s, box-shadow .25s, opacity .2s;
+  }
+  .call-btn:hover { transform: translateY(-1px); box-shadow: 0 26px 70px rgba(212,175,55,.42); }
+  .call-btn:active { transform: scale(.98); }
+  .call-btn:disabled { opacity: .55; cursor: not-allowed; transform: none; }
+
+  .call-status {
+    margin-top: 6px;
+    padding: 16px 20px;
+    border-radius: 14px;
+    font-family: var(--font-mono);
+    font-size: clamp(12px, 1vw, 15px);
+    line-height: 1.55;
+    letter-spacing: .04em;
+    display: none;
+  }
+  .call-status.show { display: block; }
+  .call-status.ok {
+    background: rgba(34,197,94,.09);
+    border: 1px solid rgba(34,197,94,.32);
+    color: #8fedb2;
+  }
+  .call-status.err {
+    background: rgba(255,90,90,.08);
+    border: 1px solid rgba(255,90,90,.3);
+    color: #ffb4b4;
+  }
+  .call-status.load {
+    background: rgba(245,231,168,.07);
+    border: 1px solid rgba(245,231,168,.26);
+    color: var(--gold-1);
+  }
+  .call-spinner {
+    display: inline-block;
+    width: 14px; height: 14px;
+    border: 2px solid rgba(245,231,168,.2);
+    border-top-color: var(--gold-1);
+    border-radius: 50%;
+    animation: spin .7s linear infinite;
+    vertical-align: -2px;
+    margin-right: 8px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .demo-pulse {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: clamp(11px, .95vw, 14px);
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: var(--live);
+    margin-top: 4vh;
+  }
+  .demo-pulse .dot {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--live);
+    box-shadow: 0 0 0 0 rgba(34,197,94,.6);
+    animation: pulse 1.8s infinite;
+  }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(34,197,94,.6); }
+    70% { box-shadow: 0 0 0 14px rgba(34,197,94,0); }
+    100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
+  }
+
+  /* ===== CHROME ===== */
+  .brand {
+    position: fixed;
+    top: 32px;
+    left: 48px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    opacity: .9;
+  }
+  .brand img {
+    height: 56px;
+    width: auto;
+    display: block;
+  }
+  .counter {
+    position: fixed;
+    bottom: 40px;
+    right: 48px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: .3em;
+    color: var(--fg-dim);
+    z-index: 10;
+  }
+  .counter .curr { color: var(--fg); }
+  .nav-hint {
+    position: fixed;
+    bottom: 40px;
+    left: 48px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: .3em;
+    color: var(--fg-dim);
+    opacity: .4;
+    z-index: 10;
+    text-transform: uppercase;
+  }
+  .fs-btn {
+    position: fixed;
+    top: 36px;
+    right: 48px;
+    z-index: 20;
+    width: 44px; height: 44px;
+    border: 1px solid rgba(245,231,168,.25);
+    background: rgba(245,231,168,.04);
+    border-radius: 10px;
+    color: var(--gold-1);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .2s;
+    padding: 0;
+  }
+  .fs-btn:hover {
+    background: rgba(245,231,168,.1);
+    border-color: var(--gold-2);
+  }
+  .fs-btn svg { width: 18px; height: 18px; display: block; }
+  :fullscreen .fs-btn { display: none; }
+  :-webkit-full-screen .fs-btn { display: none; }
+</style>
+</head>
+<body>
+
+<div class="brand"><img src="assets/logo-telesales-gold.png" alt="Telesales" /></div>
+<div class="counter"><span class="curr" id="curr">01</span> / 12</div>
+<div class="nav-hint">→ avanti · ← indietro</div>
+<button id="fsBtn" class="fs-btn" title="Schermo intero (F)">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8V3h5M21 8V3h-5M3 16v5h5M21 16v5h-5"/></svg>
+</button>
+
+<div class="deck" id="deck">
+
+  <!-- SLIDE 1 · COVER -->
+  <section class="slide cover active" data-slide="1">
+    <div class="eyebrow-top">Proposta commerciale · Aprile 2026</div>
+    <div class="wordmark">VIP Group.</div>
+    <div class="subtitle">
+      Un AI Voice che <em>screma</em> i vostri lead.<br>
+      Il setter umano chiude l'appuntamento.<br>
+      Il commerciale entra solo sul caldo.
+    </div>
+    <div class="tag">
+      <div class="l">
+        Per · VIP Group SRLS<br>
+        Da · Telesales.it<br>
+        Data · Aprile 2026
+      </div>
+      <div class="r">
+        Documento riservato<br>
+        12 slide · 6 min di lettura
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 2 · CONTESTO (problema loro) -->
+  <section class="slide" data-slide="2">
+    <div class="kicker"><span class="line"></span>Il punto di partenza</div>
+    <h1 class="display">
+      Il traffico non è<br>
+      il problema. <em>L'IT</em><br>
+      <span class="soft">dei lead sì.</span>
+    </h1>
+
+    <div class="triple">
+      <div class="tcol">
+        <div class="tcol-num">01</div>
+        <div class="tcol-big">Marketing <em>frenato</em></div>
+        <div class="tcol-s">Vorreste investire di più. Non potete. A valle c'è un collo di bottiglia che satura tutto.</div>
+      </div>
+      <div class="tcol">
+        <div class="tcol-num">02</div>
+        <div class="tcol-big">Commerciali <em>bruciati</em></div>
+        <div class="tcol-s">Il team c'è. Ma passa il tempo su lead che non chiudono. L'energia dei primi 10 min vale 10 volte quella del 100°.</div>
+      </div>
+      <div class="tcol">
+        <div class="tcol-num">03</div>
+        <div class="tcol-big">Lead <em>persi</em></div>
+        <div class="tcol-s">Il 78% non viene richiamato nei primi 5 minuti. Dopo 24 ore un lead caldo è tiepido. Dopo una settimana è freddo.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 3 · ABBIAMO CAPITO VOI (doppio business) -->
+  <section class="slide" data-slide="3">
+    <div class="kicker"><span class="line"></span>Abbiamo capito voi</div>
+    <h1 class="display" style="font-size: clamp(40px, 5.4vw, 92px);">
+      Due linee di business.<br>
+      <span class="soft">Stesso collo di</span> <em>bottiglia.</em>
+    </h1>
+
+    <div class="duo">
+      <div class="dcol">
+        <div class="dcol-tag">Linea A · Servizio</div>
+        <div class="dcol-title">Modelle AI per <em>brand e creator</em>.</div>
+        <div class="dcol-desc">Lead che chiedono un preventivo, vogliono capire costi, confrontare. Buyer professionali con ticket medio-alto. Richiedono una call vera con un commerciale preparato.</div>
+        <div class="dcol-meta">B2B · ticket alto · decisione strutturata</div>
+      </div>
+      <div class="dcol">
+        <div class="dcol-tag">Linea B · Formazione</div>
+        <div class="dcol-title">Info-business per chi <em>vuole creare le proprie</em>.</div>
+        <div class="dcol-desc">Volumi enormi dai funnel organic e paid. Curiosi, freddi, tiepidi, caldi, pronti. Ogni giorno. Serve qualcuno che parli con tutti e porti in call solo chi ha budget, timing e convinzione.</div>
+        <div class="dcol-meta">B2C · volumi alti · scrematura critica</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 4 · LA PROPOSTA (headline) -->
+  <section class="slide" data-slide="4">
+    <div class="kicker"><span class="line"></span>La nostra proposta</div>
+    <h1 class="display">
+      Un AI Voice<br>
+      come <em>primo filtro</em><br>
+      <span class="soft">commerciale.</span>
+    </h1>
+    <p class="lead">
+      Chiama tutti i lead in ingresso entro pochi minuti. Conversa in italiano nativo, ascolta, capisce se sono in target, raccoglie le informazioni che al setter umano servono per fissare l'appuntamento giusto. Il commerciale entra solo sui lead già caldi, prequalificati, pronti a firmare.
+    </p>
+  </section>
+
+  <!-- SLIDE 5 · IL FUNNEL -->
+  <section class="slide" data-slide="5">
+    <div class="kicker"><span class="line"></span>Il flusso, in numeri</div>
+    <h1 class="display" style="font-size: clamp(36px, 4.8vw, 72px);">
+      L'AI <em>screma</em>. Il setter <em>fissa</em>.<br>
+      <span class="soft">Il commerciale chiude.</span>
+    </h1>
+
+    <div class="funnel">
+      <div class="stage">
+        <div class="who">01 · AI</div>
+        <div class="big">1.000</div>
+        <div class="lbl">Lead contattati</div>
+        <div class="desc">Ads · Funnel · CRM · Form</div>
+      </div>
+      <div class="stage highlight">
+        <div class="who">02 · AI</div>
+        <div class="big">340</div>
+        <div class="lbl">Rispondono</div>
+        <div class="desc">Conversazione reale</div>
+      </div>
+      <div class="stage highlight">
+        <div class="who">03 · AI</div>
+        <div class="big">120</div>
+        <div class="lbl">In target</div>
+        <div class="desc">Budget · timing · fit</div>
+      </div>
+      <div class="stage human">
+        <div class="who">04 · Setter</div>
+        <div class="big">85</div>
+        <div class="lbl">Appuntamento fissato</div>
+        <div class="desc">Slot in calendario commerciale</div>
+      </div>
+      <div class="stage human">
+        <div class="who">05 · Commerciale</div>
+        <div class="big">85</div>
+        <div class="lbl">Call di chiusura</div>
+        <div class="desc">Solo lead pronti · Zero tempo perso</div>
+      </div>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item ai"><span class="sw"></span>AI · Contatta tutti, screma, prequalifica 24/7</div>
+      <div class="legend-item human"><span class="sw"></span>Team umano · Setter fissa, commerciale chiude</div>
+    </div>
+  </section>
+
+  <!-- SLIDE 6 · COSA FA L'AI -->
+  <section class="slide" data-slide="6">
+    <div class="kicker"><span class="line"></span>Cosa fa l'AI Voice per voi</div>
+    <h1 class="display" style="font-size: clamp(38px, 5vw, 78px);">
+      Quattro cose. <em>Sempre.</em><br>
+      <span class="soft">Senza mai stancarsi.</span>
+    </h1>
+
+    <div class="steps4">
+      <div class="step4">
+        <div class="n">01 · SCREMA</div>
+        <div class="t">Chi <em>non è in target</em> lo capisce in 90 secondi.</div>
+        <div class="d">Budget fuori range, aspettative irrealistiche, contesto sbagliato: li riconosce e li archivia con nota, senza farli mai arrivare al setter.</div>
+        <div class="dur">00:00 – 01:30</div>
+      </div>
+      <div class="step4">
+        <div class="n">02 · PREQUALIFICA</div>
+        <div class="t">Raccoglie <em>budget, timing, fit</em>.</div>
+        <div class="d">Chiede domande intelligenti. Capisce se il lead vuole modelle AI o vuole imparare a farle. Capisce se è pronto ora o tra 3 mesi. Capisce quanto può investire.</div>
+        <div class="dur">01:30 – 05:00</div>
+      </div>
+      <div class="step4">
+        <div class="n">03 · RACCOGLIE</div>
+        <div class="t">Ogni call diventa <em>una scheda CRM</em>.</div>
+        <div class="d">Nome, ruolo, azienda, obiettivo, obiezioni principali, temperatura del lead, miglior orario di richiamo. Il setter apre il CRM e sa già cosa dire.</div>
+        <div class="dur">live · ogni chiamata</div>
+      </div>
+      <div class="step4">
+        <div class="n">04 · HANDOFF</div>
+        <div class="t">Passa al setter <em>solo i caldi</em>.</div>
+        <div class="d">Lead qualificato entra in coda setter con trascrizione + scheda. Il setter chiama, rompe il ghiaccio su quello che ha già detto all'AI, fissa slot in calendario commerciale.</div>
+        <div class="dur">tempo reale</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 7 · PERCHÉ PER VIP GROUP (differenziale) -->
+  <section class="slide" data-slide="7">
+    <div class="kicker"><span class="line"></span>Perché funziona per voi in particolare</div>
+    <h1 class="display" style="font-size: clamp(38px, 5vw, 78px);">
+      Fatto su <em>misura</em><br>
+      <span class="soft">per chi vende AI.</span>
+    </h1>
+
+    <div class="triple" style="margin-top: 5vh;">
+      <div class="tcol">
+        <div class="tcol-num">01 · COERENZA</div>
+        <div class="tcol-big">Vendere AI con <em>l'AI</em>.</div>
+        <div class="tcol-s">Se vendete modelle AI, dimostrare l'AI nel vostro processo di vendita è coerente. È il primo pitch implicito prima ancora di parlare di prodotto.</div>
+      </div>
+      <div class="tcol">
+        <div class="tcol-num">02 · DUE TARGET</div>
+        <div class="tcol-big">Un <em>unico sistema</em>, due flussi.</div>
+        <div class="tcol-s">L'AI riconosce in 90 secondi se il lead cerca il servizio o la formazione. Li instrada su due pipeline CRM diverse, con script diversi, setter diversi.</div>
+      </div>
+      <div class="tcol">
+        <div class="tcol-num">03 · SCALE</div>
+        <div class="tcol-big">Da 100 a <em>1.000 lead</em> al giorno.</div>
+        <div class="tcol-s">Potete finalmente aprire il rubinetto del marketing. L'AI scala linearmente: 100 chiamate al giorno o 10.000, cambia solo il numero.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 8 · STACK / COSA INCLUDE -->
+  <section class="slide" data-slide="8">
+    <div class="kicker"><span class="line"></span>Cosa include il progetto</div>
+    <h1 class="display" style="font-size: clamp(40px, 5.2vw, 82px);">
+      Tutto quello<br>
+      che <em>serve</em> per<br>
+      <span class="soft">partire.</span>
+    </h1>
+
+    <div class="stack">
+      <div class="scell">
+        <div class="num">01</div>
+        <h3>AI Voice <em>dedicato</em></h3>
+        <p>Voce italiana nativa, cadenza commerciale, tono VIP Group. Gestione obiezioni, silenzi naturali, latenza sotto 800ms.</p>
+      </div>
+      <div class="scell">
+        <div class="num">02</div>
+        <h3>Numero <em>+39 dedicato</em></h3>
+        <p>Numero reale visibile al chiamante. Identità VIP Group. Inbound e outbound 24/7.</p>
+      </div>
+      <div class="scell">
+        <div class="num">03</div>
+        <h3>Due <em>script</em> paralleli</h3>
+        <p>Uno per la linea servizio (B2B), uno per la formazione (B2C). Calibrati con voi nelle prime 100 chiamate.</p>
+      </div>
+      <div class="scell">
+        <div class="num">04</div>
+        <h3>CRM <em>integrato</em></h3>
+        <p>Ogni chiamata genera scheda lead: temperatura, fit, obiezioni, trascrizione integrale. Multi-utente, accesso setter.</p>
+      </div>
+      <div class="scell">
+        <div class="num">05</div>
+        <h3>Automazioni <em>illimitate</em></h3>
+        <p>Form → AI entro 2 min. Handoff automatico al setter. Slot calendario commerciale. WhatsApp/email di conferma.</p>
+      </div>
+      <div class="scell">
+        <div class="num">06</div>
+        <h3>Reporting <em>mensile</em></h3>
+        <p>Dashboard live + review mensile. Ottimizzazione script in base ai dati. Supporto diretto con SLA 4h lavorative.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 9 · TIMELINE -->
+  <section class="slide" data-slide="9">
+    <div class="kicker"><span class="line"></span>Dalla firma al go-live</div>
+    <h1 class="display" style="font-size: clamp(40px, 5.2vw, 82px);">
+      14 giorni. <em>Non uno</em> di più.
+    </h1>
+
+    <div class="timeline">
+      <div class="tlstep">
+        <div class="w">W0 · Kick-off</div>
+        <div class="t">Briefing <em>e accessi</em></div>
+        <ul>
+          <li>Sessione tono + casi tipici</li>
+          <li>Accesso CRM, form, ads</li>
+          <li>Selezione voce</li>
+          <li>Definizione 2 script</li>
+        </ul>
+      </div>
+      <div class="tlstep">
+        <div class="w">W1 · Build</div>
+        <div class="t">Setup <em>AI Voice</em></div>
+        <ul>
+          <li>Voice agent v1</li>
+          <li>Numero +39 attivo</li>
+          <li>Integrazione CRM</li>
+          <li>Automazioni flusso</li>
+        </ul>
+      </div>
+      <div class="tlstep">
+        <div class="w">W2 · Test</div>
+        <div class="t">Calibrazione <em>su campione</em></div>
+        <ul>
+          <li>100 chiamate in supervisione</li>
+          <li>Tuning script + tono</li>
+          <li>Training setter sul flusso</li>
+          <li>Dashboard live</li>
+        </ul>
+      </div>
+      <div class="tlstep go">
+        <div class="w">W3 · Go-live</div>
+        <div class="t">Scale <em>a volumi pieni</em></div>
+        <ul>
+          <li>Pipeline attiva 24/7</li>
+          <li>Monitoring settimanale</li>
+          <li>Review primi KPI</li>
+          <li>Ottimizzazione continua</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 10 · PRICING -->
+  <section class="slide" data-slide="10">
+    <div class="kicker"><span class="line"></span>Investimento · prezzo riservato VIP Group</div>
+    <h1 class="display" style="font-size: clamp(38px, 5vw, 78px);">
+      Un <em>commerciale full-time</em><br>
+      <span class="soft">costa 3.000€/mese.</span>
+    </h1>
+
+    <div class="price-grid">
+      <div class="pcard">
+        <div class="phead">Setup · Una tantum</div>
+        <div class="pprice">€1.500<span class="small">+ IVA</span></div>
+        <div class="plabel">Tutto quello che serve per partire.</div>
+        <ul class="plist">
+          <li>Audit dei vostri funnel esistenti</li>
+          <li>Voice agent v1 + voice cloning</li>
+          <li>Numero +39 dedicato</li>
+          <li>2 script calibrati (servizio + formazione)</li>
+          <li>Integrazione CRM + automazioni</li>
+          <li>100 chiamate in supervisione</li>
+        </ul>
+        <div class="pfoot">50% alla firma · 50% al go-live</div>
+      </div>
+
+      <div class="pcard feature">
+        <div class="phead">Canone mensile · Forfettario</div>
+        <div class="pprice">€790<span class="small">+ IVA / mese</span></div>
+        <div class="plabel">Tutto incluso. Nessuna sorpresa.</div>
+        <ul class="plist">
+          <li>Fino a 3.000 minuti vocali/mese</li>
+          <li>CRM multi-utente illimitato</li>
+          <li>Automazioni illimitate</li>
+          <li>Ottimizzazione script continua</li>
+          <li>Consulenza mensile 1-to-1</li>
+          <li>Supporto diretto · SLA 4h</li>
+        </ul>
+        <div class="pfoot">Bloccato 12 mesi · Listino standard €1.200/mese</div>
+      </div>
+
+      <div class="pcard">
+        <div class="phead">Oltre 3.000 min</div>
+        <div class="pprice">€0,18<span class="small">/ min</span></div>
+        <div class="plabel">Pay-per-use oltre il forfait.</div>
+        <ul class="plist">
+          <li>Zero markup sul carrier</li>
+          <li>Fatturazione a consuntivo</li>
+          <li>Alert automatico soglia</li>
+          <li>Nessun vincolo minimo</li>
+          <li>Possibile upgrade a piano 10k min</li>
+        </ul>
+        <div class="pfoot">Nessun costo variabile nascosto</div>
+      </div>
+    </div>
+
+    <div class="price-note">
+      <strong>Prezzo riservato VIP Group</strong> — sconto early adopter applicato su setup (listino €1.900) e canone (listino €1.200/mese). Prezzo bloccato per i primi 12 mesi · Primo mese totale: €2.290 + IVA · Investimento anno 1: €10.980 + IVA.
+    </div>
+  </section>
+
+  <!-- SLIDE 11 · PROOF + TERMS -->
+  <section class="slide" data-slide="11">
+    <div class="kicker"><span class="line"></span>Perché Telesales</div>
+    <h1 class="display" style="font-size: clamp(38px, 5vw, 78px);">
+      Abbiamo già costruito<br>
+      <em>tutto questo</em>. <span class="soft">Più volte.</span>
+    </h1>
+
+    <div class="proof">
+      <div class="pstat">
+        <div class="n">1.033</div>
+        <div class="l">Chiamate reali<br>nella settimana scorsa</div>
+      </div>
+      <div class="pstat">
+        <div class="n">780<span style="font-size:.5em">ms</span></div>
+        <div class="l">Latenza media<br>tempo di risposta</div>
+      </div>
+      <div class="pstat">
+        <div class="n">98,4<span style="font-size:.5em">%</span></div>
+        <div class="l">Accuracy dati<br>su CRM</div>
+      </div>
+      <div class="pstat">
+        <div class="n">24<span style="font-size:.5em">/7</span></div>
+        <div class="l">Operatività<br>senza interruzioni</div>
+      </div>
+    </div>
+
+    <div class="terms">
+      <div class="term-row">
+        <div class="k">Durata contratto</div>
+        <div class="v">6 mesi minimo, poi <em>mese su mese</em></div>
+      </div>
+      <div class="term-row">
+        <div class="k">Recesso</div>
+        <div class="v">Dopo il 3° mese con 30 gg di preavviso</div>
+      </div>
+      <div class="term-row">
+        <div class="k">Garanzia</div>
+        <div class="v">Rimborso setup <em>entro 30 giorni</em> se il sistema non è operativo</div>
+      </div>
+      <div class="term-row">
+        <div class="k">Validità proposta</div>
+        <div class="v">14 giorni dalla data di emissione</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 12 · DEMO LIVE MARCO (identica alla CNA) -->
+  <section class="slide" data-slide="12">
+    <div class="demo-pulse"><span class="dot"></span>Live · Adesso</div>
+
+    <div class="demo-split">
+      <div class="demo-left">
+        <h1 class="display" style="font-size: clamp(44px, 6vw, 98px);">
+          Marco vi<br>
+          chiama in<br>
+          <em>10 secondi.</em>
+        </h1>
+        <p class="lead" style="margin-top: 0;">
+          Inserite il numero qui a fianco.<br>
+          <span style="color: var(--fg-dim)">Il telefono squilla. Marco parla in diretta.</span>
+        </p>
+      </div>
+
+      <div class="demo-right-form">
+        <form id="callForm" class="call-form">
+          <label class="call-label">Numero di telefono</label>
+          <input
+            id="callPhone"
+            class="call-input"
+            type="tel"
+            inputmode="tel"
+            autocomplete="tel"
+            value="+39 "
+            placeholder="+39 ..."
+            required />
+          <button id="callBtn" class="call-btn" type="submit">Chiama ora →</button>
+          <div id="callStatus" class="call-status"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const curr = document.getElementById('curr');
+  const total = slides.length;
+  let idx = 0;
+  function go(n) {
+    idx = Math.max(0, Math.min(total - 1, n));
+    slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+    curr.textContent = String(idx + 1).padStart(2, '0');
+  }
+  function isFormFocus() {
+    const a = document.activeElement;
+    return a && (a.tagName === 'INPUT' || a.tagName === 'TEXTAREA' || a.isContentEditable);
+  }
+  function toggleFullscreen() {
+    const d = document;
+    const el = d.documentElement;
+    const isFs = d.fullscreenElement || d.webkitFullscreenElement;
+    try {
+      if (!isFs) {
+        const req = el.requestFullscreen || el.webkitRequestFullscreen;
+        const p = req.call(el);
+        if (p && typeof p.catch === 'function') p.catch((err) => console.warn('fs error', err));
+      } else {
+        const exit = d.exitFullscreen || d.webkitExitFullscreen;
+        exit.call(d);
+      }
+    } catch (err) {
+      console.warn('fs exception', err);
+    }
+  }
+  const fsBtn = document.getElementById('fsBtn');
+  if (fsBtn) fsBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleFullscreen(); });
+  document.addEventListener('keydown', (e) => {
+    if (isFormFocus()) return;
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown' || e.key === 'ArrowDown') { e.preventDefault(); go(idx + 1); }
+    if (e.key === 'ArrowLeft' || e.key === 'PageUp' || e.key === 'ArrowUp') { e.preventDefault(); go(idx - 1); }
+    if (e.key === 'Home') go(0);
+    if (e.key === 'End') go(total - 1);
+    if (e.key === 'f' || e.key === 'F') { e.preventDefault(); toggleFullscreen(); }
+  });
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('a, button, input, form, label, .call-status')) return;
+    const x = e.clientX;
+    if (x > window.innerWidth / 2) go(idx + 1); else go(idx - 1);
+  });
+
+  // ===== DEMO LIVE · Chiamata diretta ElevenLabs =====
+  (function() {
+    const ELEVENLABS_API_KEY = "3ff8fd353d2754bf2a98fa448f38e38826c1261e73984fff80b740f4d022497c";
+    const AGENT_ID = "agent_5301kpdv4sd9e15vcz4qpm8e7vrn";
+    const PHONE_NUMBER_ID = "phnum_1001kn4a2xjaenf9516b2fb5azxe";
+
+    const form = document.getElementById('callForm');
+    const phone = document.getElementById('callPhone');
+    const btn = document.getElementById('callBtn');
+    const status = document.getElementById('callStatus');
+    if (!form) return;
+
+    // ===== PRE-WARM · scalda container ElevenLabs quando la slide demo è attiva =====
+    let lastPrewarm = 0;
+    async function prewarm() {
+      const now = Date.now();
+      if (now - lastPrewarm < 30000) return;
+      lastPrewarm = now;
+      try {
+        await Promise.all([
+          fetch(`https://api.elevenlabs.io/v1/convai/agents/${AGENT_ID}`, {
+            method: 'GET',
+            headers: { 'xi-api-key': ELEVENLABS_API_KEY }
+          }),
+          fetch(`https://api.elevenlabs.io/v1/convai/phone-numbers/${PHONE_NUMBER_ID}`, {
+            method: 'GET',
+            headers: { 'xi-api-key': ELEVENLABS_API_KEY }
+          })
+        ]);
+      } catch {}
+    }
+    const demoSlide = document.querySelector('.slide[data-slide="12"]');
+    if (demoSlide) {
+      const obs = new MutationObserver(() => {
+        if (demoSlide.classList.contains('active')) prewarm();
+      });
+      obs.observe(demoSlide, { attributes: true, attributeFilter: ['class'] });
+      if (demoSlide.classList.contains('active')) prewarm();
+    }
+    // prewarm anche alla slide precedente, così è caldo quando arrivi sulla demo
+    const preSlide = document.querySelector('.slide[data-slide="11"]');
+    if (preSlide) {
+      const obs2 = new MutationObserver(() => {
+        if (preSlide.classList.contains('active')) prewarm();
+      });
+      obs2.observe(preSlide, { attributes: true, attributeFilter: ['class'] });
+    }
+
+    const PREFIX = '+39 ';
+    function ensurePrefix() {
+      if (!phone.value.startsWith(PREFIX)) {
+        const digits = phone.value.replace(/[^\d]/g, '');
+        const rest = digits.startsWith('39') ? digits.slice(2) : digits;
+        phone.value = PREFIX + rest;
+      }
+    }
+    phone.addEventListener('focus', () => {
+      ensurePrefix();
+      setTimeout(() => {
+        const end = phone.value.length;
+        phone.setSelectionRange(end, end);
+      }, 0);
+    });
+    phone.addEventListener('input', ensurePrefix);
+    phone.addEventListener('keydown', (e) => {
+      const start = phone.selectionStart, end = phone.selectionEnd;
+      if (e.key === 'Backspace' && start <= PREFIX.length && start === end) e.preventDefault();
+      if (e.key === 'Delete' && start < PREFIX.length) e.preventDefault();
+    });
+
+    function normalize(raw) {
+      let v = (raw || '').replace(/[^\d+]/g, '').trim();
+      if (!v) return '';
+      if (v.startsWith('00')) v = '+' + v.slice(2);
+      if (!v.startsWith('+')) {
+        if (v.startsWith('39')) v = '+' + v;
+        else v = '+39' + v;
+      }
+      return v;
+    }
+
+    function setStatus(type, html) {
+      status.className = 'call-status show ' + type;
+      status.innerHTML = html;
+    }
+
+    async function triggerCall(num) {
+      const r = await fetch('https://api.elevenlabs.io/v1/convai/sip-trunk/outbound-call', {
+        method: 'POST',
+        headers: {
+          'xi-api-key': ELEVENLABS_API_KEY,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          agent_id: AGENT_ID,
+          agent_phone_number_id: PHONE_NUMBER_ID,
+          to_number: num
+        })
+      });
+      const text = await r.text();
+      let data = {};
+      try { data = JSON.parse(text); } catch {}
+      return { ok: r.ok, status: r.status, data, raw: text };
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const num = normalize(phone.value);
+      if (!/^\+\d{9,15}$/.test(num)) {
+        setStatus('err', 'Numero non valido. Riprova con prefisso internazionale.');
+        return;
+      }
+      btn.disabled = true;
+      btn.innerHTML = '<span class="call-spinner"></span> Sto chiamando...';
+      setStatus('load', '<span class="call-spinner"></span> Inoltro la chiamata a Marco...');
+
+      const MAX_ATTEMPTS = 4;
+      const RETRY_DELAY_MS = 700;
+      let lastErr = null;
+      for (let i = 1; i <= MAX_ATTEMPTS; i++) {
+        try {
+          setStatus('load', '<span class="call-spinner"></span> Inoltro la chiamata a Marco...');
+
+          const { ok, status: httpStatus, data } = await triggerCall(num);
+
+          if (!ok) {
+            const msg = data?.detail?.message || data?.detail || data?.error || ('HTTP ' + httpStatus);
+            if (httpStatus === 400 || httpStatus === 401 || httpStatus === 403) {
+              throw new Error(typeof msg === 'string' ? msg : JSON.stringify(msg));
+            }
+            lastErr = typeof msg === 'string' ? msg : JSON.stringify(msg);
+            if (i < MAX_ATTEMPTS) { await new Promise(r => setTimeout(r, RETRY_DELAY_MS)); continue; }
+            throw new Error(lastErr);
+          }
+
+          const failed = data && data.success === false;
+          if (failed) {
+            const raw = data.message || 'chiamata rifiutata';
+            if ((/486|480|busy|unavailable/i.test(raw)) && i < MAX_ATTEMPTS) {
+              lastErr = raw;
+              await new Promise(r => setTimeout(r, RETRY_DELAY_MS));
+              continue;
+            }
+            let hint = raw;
+            if (/486|busy/i.test(raw)) {
+              hint = 'Il carrier sta filtrando la chiamata. Riprova tra qualche secondo.';
+            } else if (/480|temporarily unavailable/i.test(raw)) {
+              hint = 'Numero non raggiungibile in questo momento.';
+            } else if (/403|forbidden|not allowed/i.test(raw)) {
+              hint = 'Operatore blocca la chiamata in ingresso.';
+            }
+            throw new Error(hint);
+          }
+
+          setStatus('ok', '✓ Fatto. Il telefono squilla tra pochi secondi.<br>Rispondi: Marco è in linea.');
+          btn.innerHTML = 'Chiamata inoltrata ✓';
+          return;
+        } catch (err) {
+          lastErr = err.message || 'errore sconosciuto';
+          if (i === MAX_ATTEMPTS) break;
+          await new Promise(r => setTimeout(r, RETRY_DELAY_MS));
+        }
+      }
+
+      setStatus('err', 'Chiamata non riuscita: ' + lastErr);
+      btn.disabled = false;
+      btn.innerHTML = 'Riprova →';
+    });
+  })();
+</script>
+</body>
+</html>
