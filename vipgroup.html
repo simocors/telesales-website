@@ -226,33 +226,33 @@
   }
   .tcol-num {
     font-family: var(--font-mono);
-    font-size: clamp(10.5px, .85vw, 12px);
-    letter-spacing: .3em;
+    font-size: clamp(11px, .88vw, 13px);
+    letter-spacing: .28em;
+    text-transform: uppercase;
     color: var(--accent);
   }
   .tcol-big {
     font-family: var(--font-display);
-    font-weight: 300;
-    font-size: clamp(28px, 3.2vw, 50px);
-    line-height: 1.04;
-    letter-spacing: -.02em;
-    color: var(--fg);
-  }
-  .tcol-big em {
     font-style: italic;
+    font-weight: 400;
+    font-size: clamp(44px, 5.4vw, 90px);
+    line-height: .98;
+    letter-spacing: -.03em;
     background: var(--grad-orange);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
+    margin-top: 4px;
   }
   .tcol-s {
-    font-family: var(--font-mono);
-    font-size: clamp(10.5px, .82vw, 12px);
-    letter-spacing: .18em;
-    text-transform: uppercase;
-    color: var(--fg-dim);
-    line-height: 1.6;
-    margin-top: 6px;
+    font-family: var(--font-sans);
+    font-weight: 300;
+    font-size: clamp(15px, 1.18vw, 19px);
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--fg-soft);
+    line-height: 1.5;
+    margin-top: 10px;
   }
 
   /* ===== DOPPIA COLONNA (abbiamo capito voi) ===== */
@@ -1026,29 +1026,25 @@
   <section class="slide" data-slide="2">
     <div class="kicker"><span class="line"></span>Il problema</div>
     <h1 class="display">
-      Il traffico non è<br>
-      il problema. <em>L'IT</em><br>
-      <span class="soft">dei lead sì.</span>
+      I lead ci sono.<br>
+      <span class="soft">Chi li lavori</span> <em>no.</em>
     </h1>
-    <p class="lead" style="margin-top: 24px;">
-      Due linee di business (modelle AI + formazione), volumi in crescita, commerciali bravi. Eppure non riuscite a scalare il marketing. Perché? A valle c'è un collo di bottiglia che satura tutto.
-    </p>
 
     <div class="triple">
       <div class="tcol">
-        <div class="tcol-num">01</div>
-        <div class="tcol-big">Marketing <em>frenato</em></div>
-        <div class="tcol-s">Vorreste investire di più. Non potete: i lead in più che arriverebbero non riuscireste a lavorarli.</div>
+        <div class="tcol-num">01 · Marketing</div>
+        <div class="tcol-big">frenato.</div>
+        <div class="tcol-s">Vorreste investire di più. Non potete: i lead in più non sapreste dove lavorarli.</div>
       </div>
       <div class="tcol">
-        <div class="tcol-num">02</div>
-        <div class="tcol-big">Commerciali <em>bruciati</em></div>
-        <div class="tcol-s">Il team c'è. Ma passa troppo tempo su lead che non chiudono. L'energia dei primi 10 min vale 10 volte il 100°.</div>
+        <div class="tcol-num">02 · Team</div>
+        <div class="tcol-big">bruciato.</div>
+        <div class="tcol-s">I commerciali passano il tempo su chi non chiude. Al 100° lead non hanno più energia.</div>
       </div>
       <div class="tcol">
-        <div class="tcol-num">03</div>
-        <div class="tcol-big">Lead <em>persi</em></div>
-        <div class="tcol-s">Il 78% dei lead non viene richiamato nei primi 5 min. Dopo 24h è tiepido. Dopo una settimana è freddo.</div>
+        <div class="tcol-num">03 · Tempo</div>
+        <div class="tcol-big">perso.</div>
+        <div class="tcol-s">Il 78% dei lead non viene richiamato nei primi 5 minuti. Dopo 24h è freddo.</div>
       </div>
     </div>
   </section>
