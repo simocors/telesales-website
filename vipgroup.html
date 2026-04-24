@@ -84,7 +84,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 8vh 9vw;
+    padding: clamp(110px, 13vh, 160px) 9vw 8vh;
     opacity: 0;
     pointer-events: none;
     transform: translateY(10px);
@@ -618,18 +618,11 @@
   .pcard .pprice {
     font-family: var(--font-display);
     font-weight: 300;
-    font-size: clamp(42px, 5vw, 78px);
+    font-size: clamp(48px, 5.4vw, 88px);
     line-height: 1;
-    letter-spacing: -.03em;
+    letter-spacing: -.035em;
     color: var(--fg);
-  }
-  .pcard .pprice .small {
-    font-size: .38em;
-    font-family: var(--font-mono);
-    letter-spacing: .1em;
-    color: var(--fg-dim);
-    text-transform: uppercase;
-    margin-left: 6px;
+    margin-top: 2px;
   }
   .pcard.feature .pprice {
     background: var(--grad-orange);
@@ -637,12 +630,22 @@
     background-clip: text;
     -webkit-text-fill-color: transparent;
   }
+  .pcard .pprice-unit {
+    font-family: var(--font-mono);
+    font-size: clamp(11px, .85vw, 13px);
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+    margin-top: 8px;
+  }
+  .pcard.feature .pprice-unit { color: var(--gold-1); opacity: .85; }
   .pcard .plabel {
     font-family: var(--font-sans);
     font-weight: 400;
-    font-size: clamp(15px, 1.2vw, 19px);
-    color: var(--fg);
-    line-height: 1.35;
+    font-size: clamp(14px, 1.1vw, 17px);
+    color: var(--fg-soft);
+    line-height: 1.45;
+    margin-top: 4px;
   }
   .pcard .plist {
     list-style: none;
@@ -683,19 +686,43 @@
 
   .price-note {
     margin-top: 3vh;
-    padding: 18px 24px;
-    border: 1px dashed rgba(245,231,168,.28);
+    padding: 22px 28px;
+    border: 1px solid rgba(245,231,168,.2);
     border-radius: 14px;
-    background: rgba(245,231,168,.03);
-    font-family: var(--font-mono);
-    font-size: clamp(11px, .88vw, 13px);
-    letter-spacing: .1em;
-    color: var(--gold-1);
-    line-height: 1.6;
+    background: rgba(245,231,168,.04);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 40px;
   }
-  .price-note strong {
-    color: var(--fg);
+  .price-note .pn-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    padding: 4px 0;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+  }
+  .price-note .pn-row:nth-last-child(-n+2) { border-bottom: 0; }
+  .price-note .pn-k {
+    font-family: var(--font-mono);
+    font-size: clamp(10.5px, .82vw, 12.5px);
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+  }
+  .price-note .pn-v {
+    font-family: var(--font-sans);
     font-weight: 500;
+    font-size: clamp(13px, 1.05vw, 16px);
+    color: var(--fg);
+    text-align: right;
+  }
+  .price-note .pn-v em {
+    font-style: italic;
+    background: var(--grad-orange);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   /* ===== PROOF STATS ===== */
@@ -1052,13 +1079,10 @@
   <!-- SLIDE 3 · SOLUZIONE + FUNNEL -->
   <section class="slide" data-slide="3">
     <div class="kicker"><span class="line"></span>La soluzione</div>
-    <h1 class="display" style="font-size: clamp(36px, 4.8vw, 72px);">
+    <h1 class="display" style="font-size: clamp(36px, 4.6vw, 70px);">
       L'AI <em>screma</em>. Il setter <em>fissa</em>.<br>
       <span class="soft">Il commerciale chiude.</span>
     </h1>
-    <p class="lead" style="margin-top: 20px; font-size: clamp(15px, 1.2vw, 19px);">
-      Un AI Voice chiama tutti i lead in ingresso entro pochi minuti. Conversa, screma chi è fuori target, raccoglie budget/timing/fit. Passa al setter umano solo i caldi. Il commerciale entra su appuntamenti già qualificati.
-    </p>
 
     <div class="funnel">
       <div class="stage">
@@ -1099,85 +1123,91 @@
     </div>
   </section>
 
-  <!-- SLIDE 4 · LA MACCHINA (stack + timeline compatta) -->
+  <!-- SLIDE 4 · LA MACCHINA -->
   <section class="slide" data-slide="4">
-    <div class="kicker"><span class="line"></span>La macchina · tutto incluso, live in 14 giorni</div>
-    <h1 class="display" style="font-size: clamp(38px, 5vw, 78px);">
-      Tutto pronto. <em>In due settimane.</em>
+    <div class="kicker"><span class="line"></span>La macchina</div>
+    <h1 class="display" style="font-size: clamp(40px, 5.2vw, 82px);">
+      Tutto pronto.<br>
+      <em>In 14 giorni.</em>
     </h1>
 
     <div class="stack" style="margin-top: 4vh;">
       <div class="scell">
         <div class="num">01</div>
         <h3>AI Voice <em>dedicato</em></h3>
-        <p>Voce italiana nativa, tono VIP Group, latenza sotto 800ms. Gestione obiezioni e silenzi naturali.</p>
+        <p>Voce italiana nativa, tono VIP Group, latenza sotto 800ms.</p>
       </div>
       <div class="scell">
         <div class="num">02</div>
-        <h3>Due <em>script</em> paralleli</h3>
-        <p>Uno per linea servizio (B2B), uno per formazione (B2C). Calibrati nelle prime 100 chiamate.</p>
+        <h3>Due <em>script</em></h3>
+        <p>Uno per il servizio (B2B), uno per la formazione (B2C).</p>
       </div>
       <div class="scell">
         <div class="num">03</div>
         <h3>Numero <em>+39</em> dedicato</h3>
-        <p>Identità VIP Group al chiamante. Inbound e outbound 24/7, CRM integrato multi-utente.</p>
+        <p>Identità VIP Group al chiamante. Inbound e outbound 24/7.</p>
       </div>
       <div class="scell">
         <div class="num">04</div>
         <h3>Automazioni <em>end-to-end</em></h3>
-        <p>Form → AI in 2 min. Handoff setter. Slot calendario commerciale. Conferme WhatsApp/email.</p>
+        <p>Form → AI in 2 min. Handoff al setter. Slot calendario.</p>
       </div>
       <div class="scell">
         <div class="num">05</div>
         <h3>CRM + <em>reporting</em></h3>
-        <p>Scheda lead per ogni call: temperatura, fit, obiezioni, trascrizione. Dashboard live + review mensile.</p>
+        <p>Scheda lead, trascrizione integrale, dashboard live.</p>
       </div>
       <div class="scell">
         <div class="num">06</div>
         <h3>Consulenza <em>1-to-1</em></h3>
-        <p>Supporto diretto SLA 4h. Ottimizzazione continua script in base ai dati. Review strategica mensile.</p>
+        <p>Supporto diretto SLA 4h. Review strategica mensile.</p>
       </div>
     </div>
 
     <div class="legend" style="margin-top: 4vh;">
       <div class="legend-item ai"><span class="sw"></span>W0 Kick-off · W1 Build · W2 Calibrazione · W3 Go-live</div>
-      <div class="legend-item human"><span class="sw"></span>14 giorni dalla firma al primo lead qualificato</div>
     </div>
   </section>
 
   <!-- SLIDE 5 · INVESTIMENTO -->
   <section class="slide" data-slide="5">
-    <div class="kicker"><span class="line"></span>Investimento · prezzo riservato VIP Group</div>
-    <h1 class="display" style="font-size: clamp(36px, 4.8vw, 72px);">
-      Meno di <em>un commerciale</em><br>
-      <span class="soft">a tempo pieno.</span>
+    <div class="kicker"><span class="line"></span>Investimento · riservato VIP Group</div>
+    <h1 class="display" style="font-size: clamp(38px, 5vw, 78px);">
+      Un prezzo.<br>
+      <em>Bloccato</em> 12 mesi.
     </h1>
 
     <div class="price-grid">
       <div class="pcard">
-        <div class="phead">Setup · Una tantum</div>
-        <div class="pprice">€1.500<span class="small">+ IVA</span></div>
+        <div class="phead">Setup</div>
+        <div class="pprice">€1.500</div>
+        <div class="pprice-unit">+ IVA · una tantum</div>
         <div class="plabel">Voice agent, numero, 2 script, CRM, automazioni, 100 call in supervisione.</div>
-        <div class="pfoot">50% alla firma · 50% al go-live · Listino €1.900</div>
+        <div class="pfoot">Listino €1.900 · 50% firma, 50% go-live</div>
       </div>
 
       <div class="pcard feature">
-        <div class="phead">Canone mensile · Forfettario</div>
-        <div class="pprice">€790<span class="small">+ IVA / mese</span></div>
-        <div class="plabel">3.000 min voice/mese · CRM illimitato · automazioni · consulenza 1-to-1 · SLA 4h.</div>
-        <div class="pfoot">Bloccato 12 mesi · Listino standard €1.200/mese</div>
+        <div class="phead">Canone mensile</div>
+        <div class="pprice">€790</div>
+        <div class="pprice-unit">+ IVA al mese</div>
+        <div class="plabel">3.000 minuti voice · CRM illimitato · consulenza 1-to-1 · SLA 4h.</div>
+        <div class="pfoot">Listino €1.200/mese · Bloccato 12 mesi</div>
       </div>
 
       <div class="pcard">
-        <div class="phead">Extra min · Pay-per-use</div>
-        <div class="pprice">€0,18<span class="small">/ min</span></div>
-        <div class="plabel">Oltre il forfait, zero markup sul carrier. Fatturazione a consuntivo, alert soglia.</div>
+        <div class="phead">Extra minuti</div>
+        <div class="pprice">€0,18</div>
+        <div class="pprice-unit">al minuto · oltre il forfait</div>
+        <div class="plabel">Zero markup sul carrier. Fatturazione a consuntivo.</div>
         <div class="pfoot">Nessun costo variabile nascosto</div>
       </div>
     </div>
 
     <div class="price-note">
-      <strong>Primo mese · €2.290 + IVA</strong>  ·  Anno 1 · €10.980 + IVA  ·  Durata minima 6 mesi poi mese su mese  ·  Recesso dopo il 3° con 30 gg preavviso  ·  Rimborso setup entro 30 gg se il sistema non è operativo  ·  Validità proposta 14 gg.
+      <div class="pn-row"><span class="pn-k">Primo mese</span><span class="pn-v"><em>€2.290</em> + IVA</span></div>
+      <div class="pn-row"><span class="pn-k">Anno 1</span><span class="pn-v"><em>€10.980</em> + IVA</span></div>
+      <div class="pn-row"><span class="pn-k">Durata</span><span class="pn-v">6 mesi, poi mese su mese</span></div>
+      <div class="pn-row"><span class="pn-k">Garanzia</span><span class="pn-v">Rimborso setup entro 30 gg</span></div>
     </div>
   </section>
 
