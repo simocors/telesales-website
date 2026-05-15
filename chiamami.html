@@ -73,25 +73,18 @@
   .left { display: flex; flex-direction: column; gap: 3vh; }
   .right { display: flex; flex-direction: column; }
 
-  .demo-pulse {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    font-family: var(--font-mono);
-    font-size: clamp(11px, .95vw, 14px);
-    letter-spacing: .28em;
-    text-transform: uppercase;
-    color: var(--live);
+  .brand-logo {
+    display: inline-block;
     width: fit-content;
+    line-height: 0;
+    transition: opacity .25s;
   }
-  .demo-pulse .dot {
-    width: 9px; height: 9px;
-    border-radius: 50%;
-    background: var(--live);
-    box-shadow: 0 0 12px var(--live);
-    animation: pulse 1.4s ease-in-out infinite;
+  .brand-logo:hover { opacity: .85; }
+  .brand-logo img {
+    height: clamp(38px, 4vw, 56px);
+    width: auto;
+    display: block;
   }
-  @keyframes pulse { 0%,100% { opacity:1; transform:scale(1) } 50% { opacity:.5; transform:scale(.85) } }
 
   .display {
     font-family: var(--font-display);
@@ -240,7 +233,9 @@
 <body>
   <main>
     <div class="left">
-      <div class="demo-pulse"><span class="dot"></span>Live · Adesso</div>
+      <a class="brand-logo" href="https://telesales.it" target="_blank" rel="noopener">
+        <img src="assets/logo-telesales-gold.png" alt="Telesales" />
+      </a>
       <div>
         <div class="brand-mark">telesales.it</div>
         <h1 class="display">Marco ti<br>chiama in<br><em>10 secondi.</em></h1>
