@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Marco ti chiama · Telesales.it</title>
+<link rel="icon" type="image/png" href="assets/logo-telesales-gold.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink-0: #050508;
+    --ink-1: #0a0a10;
+    --ink-2: #11111a;
+    --fg: #f4f1e8;
+    --fg-soft: #c9c6bc;
+    --fg-dim: #706e65;
+    --accent: #d4af37;
+    --gold-1: #f5e7a8;
+    --gold-2: #d4af37;
+    --gold-3: #7a5e18;
+    --live: #22c55e;
+    --grad-gold: linear-gradient(135deg, #f5e7a8 0%, #d4af37 50%, #7a5e18 100%);
+    --grad-mixed: linear-gradient(120deg, #f9ecc0 0%, #f5e7a8 30%, #d4af37 70%, #7a5e18 100%);
+    --font-display: "Fraunces", Georgia, serif;
+    --font-sans: "Geist", -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--ink-0);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    min-height: 100vh;
+    width: 100vw;
+    -webkit-font-smoothing: antialiased;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 55% 40% at 20% 15%, rgba(245,231,168,.14), transparent 55%),
+      radial-gradient(ellipse 50% 45% at 82% 75%, rgba(212,175,55,.16), transparent 60%),
+      radial-gradient(ellipse 70% 50% at 50% 100%, rgba(122,94,24,.12), transparent 55%);
+    pointer-events: none;
+    z-index: 0;
+    animation: breathe 12s ease-in-out infinite;
+  }
+  @keyframes breathe { 0%,100% { opacity:.85 } 50% { opacity:1 } }
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .3 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: .5;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+    z-index: 1;
+  }
+
+  main {
+    position: relative;
+    z-index: 2;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    align-items: center;
+    gap: 5vw;
+    padding: 7vh 9vw;
+  }
+  .left { display: flex; flex-direction: column; gap: 3vh; }
+  .right { display: flex; flex-direction: column; }
+
+  .demo-pulse {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: clamp(11px, .95vw, 14px);
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: var(--live);
+    width: fit-content;
+  }
+  .demo-pulse .dot {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--live);
+    box-shadow: 0 0 12px var(--live);
+    animation: pulse 1.4s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity:1; transform:scale(1) } 50% { opacity:.5; transform:scale(.85) } }
+
+  .display {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(44px, 6.2vw, 98px);
+    letter-spacing: -.035em;
+    line-height: .98;
+  }
+  .display em {
+    font-style: italic;
+    background: var(--grad-gold);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding-right: 4px;
+  }
+  .lead {
+    font-family: var(--font-sans);
+    font-weight: 300;
+    font-size: clamp(16px, 1.3vw, 22px);
+    line-height: 1.5;
+    color: var(--fg-soft);
+    max-width: 540px;
+  }
+  .lead .dim { color: var(--fg-dim); }
+
+  .brand-mark {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-style: italic;
+    font-size: clamp(28px, 2.6vw, 44px);
+    letter-spacing: -.04em;
+    background: var(--grad-mixed);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 6px;
+  }
+
+  .call-form { display: flex; flex-direction: column; gap: 16px; width: 100%; }
+  .call-label {
+    font-family: var(--font-mono);
+    font-size: clamp(10.5px, .85vw, 12.5px);
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+  }
+  .call-input {
+    -webkit-appearance: none;
+    appearance: none;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(245,231,168,.22);
+    border-radius: 16px;
+    padding: 26px 28px;
+    font-family: var(--font-sans);
+    font-size: clamp(22px, 2.2vw, 34px);
+    font-weight: 400;
+    color: var(--fg);
+    outline: none;
+    transition: all .25s;
+    letter-spacing: .02em;
+    caret-color: var(--gold-2);
+  }
+  .call-input::placeholder { color: var(--fg-dim); }
+  .call-input:focus {
+    border-color: var(--gold-2);
+    background: rgba(245,231,168,.06);
+    box-shadow: 0 0 0 5px rgba(212,175,55,.12);
+  }
+  .call-btn {
+    margin-top: 6px;
+    padding: 26px 30px;
+    border: 0;
+    border-radius: 16px;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: clamp(16px, 1.3vw, 20px);
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    background: var(--grad-gold);
+    color: #0a0a10;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    box-shadow: 0 20px 60px rgba(212,175,55,.35);
+    transition: transform .15s, box-shadow .25s, opacity .2s;
+  }
+  .call-btn:hover { transform: translateY(-1px); box-shadow: 0 26px 70px rgba(212,175,55,.42); }
+  .call-btn:active { transform: scale(.98); }
+  .call-btn:disabled { opacity: .55; cursor: not-allowed; transform: none; }
+
+  .call-status {
+    margin-top: 6px;
+    padding: 16px 20px;
+    border-radius: 14px;
+    font-family: var(--font-mono);
+    font-size: clamp(12px, 1vw, 15px);
+    line-height: 1.55;
+    letter-spacing: .04em;
+    display: none;
+  }
+  .call-status.show { display: block; }
+  .call-status.ok { background: rgba(34,197,94,.09); border: 1px solid rgba(34,197,94,.32); color: #8fedb2; }
+  .call-status.err { background: rgba(255,90,90,.08); border: 1px solid rgba(255,90,90,.3); color: #ffb4b4; }
+  .call-status.load { background: rgba(245,231,168,.07); border: 1px solid rgba(245,231,168,.26); color: var(--gold-1); }
+
+  .call-spinner {
+    display: inline-block;
+    width: 14px; height: 14px;
+    border: 2px solid rgba(245,231,168,.2);
+    border-top-color: var(--gold-1);
+    border-radius: 50%;
+    animation: spin .7s linear infinite;
+    vertical-align: -2px;
+    margin-right: 8px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .footer {
+    position: absolute;
+    bottom: 24px;
+    left: 9vw;
+    right: 9vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: .26em;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+  }
+
+  @media (max-width: 880px) {
+    main {
+      grid-template-columns: 1fr;
+      padding: 8vh 7vw;
+      gap: 4vh;
+    }
+    .footer { position: static; flex-direction: column; gap: 8px; align-items: flex-start; margin-top: 6vh; padding: 0 7vw 4vh; }
+  }
+</style>
+</head>
+<body>
+  <main>
+    <div class="left">
+      <div class="demo-pulse"><span class="dot"></span>Live · Adesso</div>
+      <div>
+        <div class="brand-mark">telesales.it</div>
+        <h1 class="display">Marco ti<br>chiama in<br><em>10 secondi.</em></h1>
+      </div>
+      <p class="lead">
+        Inserisci il tuo numero qui a fianco.<br>
+        <span class="dim">Il telefono squilla. Marco parla in diretta.</span>
+      </p>
+    </div>
+
+    <div class="right">
+      <form id="callForm" class="call-form" autocomplete="off">
+        <label class="call-label" for="callPhone">Numero di telefono</label>
+        <input
+          id="callPhone"
+          class="call-input"
+          type="tel"
+          inputmode="tel"
+          autocomplete="tel"
+          value="+39 "
+          placeholder="+39 ..."
+          required />
+        <button id="callBtn" class="call-btn" type="submit">Chiama ora →</button>
+        <div id="callStatus" class="call-status"></div>
+      </form>
+    </div>
+  </main>
+
+  <div class="footer">
+    <span>Telesales.it · AI Voice</span>
+    <span>Marco Ferretti · v2.0 SIP</span>
+  </div>
+
+<script>
+  // Marco Ferretti 2.0 SIP clone (pcm_16000, eleven_v3_conversational)
+  const ELEVENLABS_API_KEY = "sk_9148f936dc1c67e88b13f7b400333cb87813613682f70726";
+  const AGENT_ID           = "agent_9201krn8z6ptevxsmx3g5e6vy69b";
+  const PHONE_NUMBER_ID    = "phnum_1501kr3sx76sfxeap503jqy1m7j9"; // +390554652406 Telnyx Italia
+
+  const form   = document.getElementById('callForm');
+  const phone  = document.getElementById('callPhone');
+  const btn    = document.getElementById('callBtn');
+  const status = document.getElementById('callStatus');
+
+  function normalize(raw) {
+    let v = (raw || '').replace(/[^\d+]/g, '').trim();
+    if (!v) return '';
+    if (v.startsWith('00')) v = '+' + v.slice(2);
+    if (!v.startsWith('+')) {
+      if (v.startsWith('39')) v = '+' + v;
+      else v = '+39' + v;
+    }
+    return v;
+  }
+  function setStatus(type, html) {
+    status.className = 'call-status show ' + type;
+    status.innerHTML = html;
+  }
+
+  async function triggerCall(num) {
+    const r = await fetch('https://api.elevenlabs.io/v1/convai/sip-trunk/outbound-call', {
+      method: 'POST',
+      headers: { 'xi-api-key': ELEVENLABS_API_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        agent_id: AGENT_ID,
+        agent_phone_number_id: PHONE_NUMBER_ID,
+        to_number: num
+      })
+    });
+    const text = await r.text();
+    let data = {};
+    try { data = JSON.parse(text); } catch {}
+    return { ok: r.ok, status: r.status, data, raw: text };
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const num = normalize(phone.value);
+    if (!/^\+\d{9,15}$/.test(num)) {
+      setStatus('err', 'Numero non valido. Riprova con prefisso internazionale (+39 ...).');
+      return;
+    }
+
+    btn.disabled = true;
+    btn.innerHTML = '<span class="call-spinner"></span> Sto chiamando...';
+    setStatus('load', '<span class="call-spinner"></span> Inoltro la chiamata a Marco...');
+
+    const MAX = 4, DELAY = 700;
+    let lastErr = null;
+
+    for (let i = 1; i <= MAX; i++) {
+      try {
+        const { ok, status: httpStatus, data } = await triggerCall(num);
+
+        if (!ok) {
+          const msg = data?.detail?.message || data?.detail || data?.error || ('HTTP ' + httpStatus);
+          if (httpStatus === 400 || httpStatus === 401 || httpStatus === 403) {
+            throw new Error(typeof msg === 'string' ? msg : JSON.stringify(msg));
+          }
+          lastErr = typeof msg === 'string' ? msg : JSON.stringify(msg);
+          if (i < MAX) { await new Promise(r => setTimeout(r, DELAY)); continue; }
+          throw new Error(lastErr);
+        }
+
+        const failed = data && data.success === false;
+        if (failed) {
+          const raw = data.message || 'chiamata rifiutata';
+          if ((/486|480|busy|unavailable/i.test(raw)) && i < MAX) {
+            lastErr = raw;
+            await new Promise(r => setTimeout(r, DELAY));
+            continue;
+          }
+          let hint = raw;
+          if (/486|busy/i.test(raw))                    hint = 'Linea occupata. Riprova tra qualche secondo.';
+          else if (/480|temporarily unavailable/i.test(raw)) hint = 'Numero non raggiungibile in questo momento.';
+          else if (/403|forbidden|not allowed/i.test(raw))   hint = 'Operatore blocca la chiamata in ingresso.';
+          throw new Error(hint);
+        }
+
+        setStatus('ok', '✓ Fatto. Il telefono squilla tra pochi secondi.<br>Rispondi: Marco è in linea.');
+        btn.innerHTML = 'Chiamata inoltrata ✓';
+        return;
+      } catch (err) {
+        lastErr = err.message || 'errore sconosciuto';
+        if (i === MAX) break;
+        await new Promise(r => setTimeout(r, DELAY));
+      }
+    }
+
+    setStatus('err', 'Chiamata non riuscita: ' + lastErr);
+    btn.disabled = false;
+    btn.innerHTML = 'Riprova →';
+  });
+</script>
+</body>
+</html>
